@@ -35,6 +35,10 @@ public class Main {
         System.out.println(algorithm.BinaryToBinaryString(algorithm.Encode(V)));
         EncWriter.print(algorithm.BinaryToBinaryString(algorithm.Encode(V)));
         EncWriter.close();
+        System.out.println("encode "+algorithm.Encode(V));
+
+        System.out.println("decode " + algorithm.Decode(algorithm.Encode(V)));
+        System.out.println(algorithm.BinaryToAsci(algorithm.Decode(algorithm.Encode(V))));
 
 
 
