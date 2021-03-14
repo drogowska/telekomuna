@@ -126,8 +126,33 @@ public class Algorithm {
 
 
 
-    public void Decode() {
-
+    //funkcja usuwa bity parzystości z podanego wektora
+    public List<Integer> Decode(List<Integer> text) {
+        List<Integer> list = new Vector<>();
+        int j = 0, n = 0;
+        System.out.println(text.size());
+        while (j<text.size()){
+            list.add(text.get(j));      //przepisanie do pomocniczej tablicy z pomienięciem bitów parzystości
+            if((j+1)%8==0){
+                j+=9;
+                n+=1;
+            }
+            else j+=1;
+        }
+        return  list;
+    }
+    
+    private void FixOneErrors(List<Integer> HT, List<Integer> T){ //nie
+        List<Integer> column = new Vector<>();
+        for(int i=0;i<m+n;i++){
+            for(int j=0;j<n;j++){
+                column.add(H[j][i]);        //wektor zawierający kolumny macierzy H
+                if(column.get(j) == HT.get(j)){      //sprawdzenie czy iloczyn HT ma takie same kolumny co macierz H,
+                    T.set(i,(T.get(i) == 1? 0:1));      // jeżeli tak to znaleziono błąd i następuje negacja bitu
+                }
+            }
+            column.clear();
+        }
     }
 }
 
