@@ -13,30 +13,17 @@ public class Main {
 
         System.setProperty("file.encoding", "UTF-8");
 
-        String filePath = "./message.txt";
+        String filePath = "./message";
         String binaryFile = "./binary.txt";
         String encodedFile = "./encoded.txt";
         String correctedFile = "./corrected.txt";
-        Charset UTF_8 = Charset.forName("UTF-8");
+
+     //   Charset UTF_8 = Charset.forName("UTF-8");
 
         BufferedReader fileReader = new BufferedReader(new FileReader(filePath));
         String message = fileReader.readLine();         //odczyt z pliku wiadomości
         System.out.println(message);
-        byte[] t = message.getBytes(UTF_8);
-        List<Integer> list = new Vector<>();
-        for(byte i : t)
-        {
-            System.out.println("binary " + i );
-            List<Integer> f = algorithm.BinaryStringToBinary(Integer.toBinaryString(i));
-            System.out.println("a " + algorithm.BinaryStringToBinary(Integer.toBinaryString(i)));
-            for(int j=0;j<f.size();j++){
-                list.add(f.get(j));
-            }
-            f.clear();
 
-
-        }
-        System.out.println("kls"+list);
 
 
         PrintWriter BinWriter = new PrintWriter(binaryFile);
@@ -72,7 +59,8 @@ public class Main {
         PrintWriter corWriter = new PrintWriter(correctedFile);
         System.out.print("");
         System.out.println("correct" + algorithm.Correct(v1));
-        corWriter.write(algorithm.BinaryToBinaryString(v1));
+        corWriter.write(algorithm.BinaryToBinaryString(algorithm.Correct(v1)));
+        corWriter.close();
         System.out.println(algorithm.Decode(algorithm.Correct(v1)));
         System.out.println(algorithm.BinaryToAsci(algorithm.Decode(algorithm.Correct(v1))));
 
