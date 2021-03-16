@@ -35,13 +35,15 @@ public class Algorithm {
         String tmp = "";
         StringBuilder stringBuilder = new StringBuilder();
         tmp += String.valueOf(Integer.valueOf(Integer.toBinaryString(text)));
-
-        if(tmp.length()%8 != 0) {               //uzupełnienie 0 na początku do 8 bitów
-            stringBuilder.append(tmp);
+        System.out.println("tmp"+tmp);
+        stringBuilder.append(tmp);
+        while(stringBuilder.length()%8 != 0) {               //uzupełnienie 0 na początku do 8 bitów
+            //stringBuilder.append(tmp);
             stringBuilder.insert(0,'0');
-        } else {
-            stringBuilder.append(tmp);
-        }
+        } //else {
+
+        //}
+       // System.out.println(str);
         return stringBuilder.toString().trim();
     }
 

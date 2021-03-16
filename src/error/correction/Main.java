@@ -2,6 +2,7 @@ package error.correction;
 
 //import error.correction.Algorithm;
 import java.io.*;
+import java.nio.charset.Charset;
 import java.util.List;
 import java.util.Vector;
 
@@ -16,17 +17,26 @@ public class Main {
         String binaryFile = "./binary.txt";
         String encodedFile = "./encoded.txt";
         String correctedFile = "./corrected.txt";
+        Charset UTF_8 = Charset.forName("UTF-8");
 
         BufferedReader fileReader = new BufferedReader(new FileReader(filePath));
         String message = fileReader.readLine();         //odczyt z pliku wiadomości
         System.out.println(message);
-//        byte[] t = message.getBytes();
-//        for(byte i : t)
-//        {
-//            System.out.println("binary " + i );
-//            System.out.println("a " + Integer.toBinaryString(i));
-//        }
+        byte[] t = message.getBytes(UTF_8);
+        List<Integer> list = new Vector<>();
+        for(byte i : t)
+        {
+            System.out.println("binary " + i );
+            List<Integer> f = algorithm.BinaryStringToBinary(Integer.toBinaryString(i));
+            System.out.println("a " + algorithm.BinaryStringToBinary(Integer.toBinaryString(i)));
+            for(int j=0;j<f.size();j++){
+                list.add(f.get(j));
+            }
+            f.clear();
 
+
+        }
+        System.out.println("kls"+list);
 
 
         PrintWriter BinWriter = new PrintWriter(binaryFile);
@@ -34,10 +44,11 @@ public class Main {
         BinWriter.print(algorithm.convertCharsToBinaryString(message));
 //        System.out.println(algorithm.convertCharsToBinaryString(message));
         BinWriter.close();
+        //System.out.println(Integer.toBinaryString(32));
 
         PrintWriter EncWriter = new PrintWriter(encodedFile);
         Vector<Integer> V = (Vector<Integer>) algorithm.BinaryStringToBinary(algorithm.convertCharsToBinaryString(message));
-//        System.out.println(V);
+        //System.out.println("to str" + V.toString());
 //        System.out.println(algorithm.BinaryToAsci(V));
 //
 //        System.out.println(algorithm.BinaryToBinaryString(algorithm.Encode(V)));
@@ -53,8 +64,8 @@ public class Main {
         List<Integer> v1 = en;
         System.out.println("V" + en);
         System.out.println("v1" + v1);
-        v1.set(18,0);
-        v1.set(19,1);
+        v1.set(1,0);
+        //v1.set(0,1);
         System.out.println("v1" + v1);
         //algorithm.Correct(v1);
 
@@ -62,6 +73,8 @@ public class Main {
         System.out.print("");
         System.out.println("correct" + algorithm.Correct(v1));
         corWriter.write(algorithm.BinaryToBinaryString(v1));
+        System.out.println(algorithm.Decode(algorithm.Correct(v1)));
+        System.out.println(algorithm.BinaryToAsci(algorithm.Decode(algorithm.Correct(v1))));
 
 
     }
