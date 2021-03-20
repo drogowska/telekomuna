@@ -66,7 +66,7 @@ public class Algorithm {
         return string;
     }
 
-    //konwersja wektora zer i jedenek na znaki kodu asci
+    //konwersja wektora zer i jedynek na znaki kodu asci
     public char[] BinaryToAsci(List<Integer> bin) {
         char[] tab = new char[bin.size() / 8];        //tablica przechowująca odkodwane znaki
         char znak;
