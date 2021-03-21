@@ -16,7 +16,7 @@ public class App extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("window.fxml"));
 
         stage.setTitle("Program");
-        stage.setScene(new Scene(root, 300, 275));
+        stage.setScene(new Scene(root, 600, 400));
         stage.show();
     }
 }
