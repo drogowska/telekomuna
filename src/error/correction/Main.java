@@ -64,8 +64,8 @@ public class Main {
         System.out.println("correct" + algorithm.Correct(v1));
         //corWriter.write(algorithm.BinaryToBinaryString(algorithm.Correct(v1)));
         corWriter.close();
-        System.out.println(algorithm.Decode(algorithm.Correct(v1)));
-        System.out.println(algorithm.BinaryToAsci(algorithm.Decode(algorithm.Correct(v1))));
+//        System.out.println(algorithm.Decode(algorithm.Correct(v1)));
+//        System.out.println(algorithm.BinaryToAsci(algorithm.Decode(algorithm.Correct(v1))));
 
 
     }

@@ -6,6 +6,7 @@ import javafx.scene.control.TextArea;
 import javafx.stage.FileChooser;
 
 import java.io.*;
+import java.util.List;
 
 public class Controller {
     public TextArea textAreaSender;
@@ -19,13 +20,15 @@ public class Controller {
 
     @FXML
     public void onActionEncode(ActionEvent actionEvent) throws FileNotFoundException {
+        // zapis do pliku zakodowanej wiadomosci
         FileChooser fileChooser = new FileChooser();
         File file = fileChooser.showSaveDialog(null);
 
         if(file != null){
-            //initialize correctly text
-            String text = null;
-            SaveFile(text, file);
+            List<Integer> text = algorithm.prepareStringToList(textAreaReceiver.getText());
+            List<Integer> codedText = algorithm.Encode(text);
+            String newText = algorithm.BinaryToBinaryString(codedText);
+            SaveFile(newText, file);
         }
     }
 
@@ -35,15 +38,10 @@ public class Controller {
     }
 
     @FXML
-    public void onActionRepair(ActionEvent actionEvent) throws FileNotFoundException {
-        FileChooser fileChooser = new FileChooser();
-        File file = fileChooser.showSaveDialog(null);
-
-        if(file != null){
-            //initialize correctly text
-            String text = null;
-            SaveFile(text, file);
-        }
+    public void onActionRepair(ActionEvent actionEvent) throws IOException {
+        List<Integer> textToCorrect = algorithm.prepareStringToList(textAreaReceiver.getText());
+        String correctedText = algorithm.Correct(textToCorrect);
+        textAreaReceiver.setText(correctedText);
     }
 
     private void loadFile(TextArea textArea) throws IOException {

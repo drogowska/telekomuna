@@ -26,7 +26,7 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <Button fx:id="loadFileSender" layoutX="56.0" layoutY="273.0" mnemonicParsing="false" onAction="#onActionLoadFile" text="Wczytaj" />
+            <Button fx:id="loadFileSender" layoutX="56.0" layoutY="273.0" mnemonicParsing="false" onAction="#onActionLoadFileSender" text="Wczytaj" />
             <Button layoutX="175.0" layoutY="273.0" mnemonicParsing="false" onAction="#onActionEncode" text="Zakoduj" />
             <TextArea fx:id="textAreaSender" layoutX="47.0" layoutY="48.0" prefHeight="200.0" prefWidth="200.0" />
          </children>
@@ -40,8 +40,8 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <Button layoutX="69.0" layoutY="276.0" mnemonicParsing="false" text="Wczytaj" />
-            <Button layoutX="181.0" layoutY="276.0" mnemonicParsing="false" text="Popraw" />
+            <Button layoutX="69.0" layoutY="276.0" mnemonicParsing="false" onAction="#onActionLoadFileReceiver" text="Wczytaj" />
+            <Button layoutX="181.0" layoutY="276.0" mnemonicParsing="false" onAction="#onActionRepair" text="Popraw" />
             <TextArea fx:id="textAreaReceiver" layoutX="53.0" layoutY="50.0" prefHeight="200.0" prefWidth="200.0" />
          </children>
       </AnchorPane>

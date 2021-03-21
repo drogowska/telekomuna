@@ -7,7 +7,8 @@ public class Algorithm {
 
     //Dmin = 4 dla korekcji 1 błędu ale detekcji 2, a Dmin= 5 dla korekcji 2 błędów
 
-    private static int[][] H = {    //Macierz H (parzystości) ma nie posiadać kolumny zerowej,
+    private static int[][] H = {
+            //Macierz H (parzystości) ma nie posiadać kolumny zerowej,
             //identycznych kolumn oraz
             //żadna z kolumn nie może być sumą dwóch innych
 
@@ -48,6 +49,12 @@ public class Algorithm {
         return s1;
     }
 
+    public List<Integer> prepareStringToList(String text) {
+        String binaryString = convertCharsToBinaryString(text);
+        List<Integer> result = BinaryStringToBinary(binaryString);
+        return result;
+    }
+
     //konwersja bitów zapisanych w stringu do vektora bitów reprezentowanych przez inty
     public List<Integer> BinaryStringToBinary(String text) {
         List<Integer> v = new Vector<>();
@@ -83,7 +90,7 @@ public class Algorithm {
 
 
     // funkja wyknywująca mnożenie macierzy H przez wektor oraz dodająca bity parzystości
-    private List<Integer> AddParityBites(List<Integer> v) {
+    private List<Integer> AddParityBits(List<Integer> v) {
         List<Integer> tmp = new Vector<>(v.size());    //pomocnicza tablica przechowująca wynik operacji
         for (int i = 0; i < v.size(); i++) {
             tmp.add(v.get(i));
@@ -111,7 +118,7 @@ public class Algorithm {
             tmp.add(text.get(i));
             copy.add(text.get(i));
             if ((i + 1) % 8 == 0 && i != 0) {      //wstawienie po każdej literze (1 bajt) bitów parzystości
-                tmp = AddParityBites(tmp);
+                tmp = AddParityBits(tmp);
                 for (int j = 0; j < m; j++) copy.add(tmp.get(j + 8));
                 tmp.clear();
             }
@@ -178,7 +185,7 @@ public class Algorithm {
     }
 
     //funkcja sprawdzająca czy wiadomość posiada błędy, jeśli tak to znajduje je i poprawia
-    public List<Integer> Correct(List<Integer> T) {
+    public String Correct(List<Integer> T) {
         int error = 0;                          //zmienna określająca czy został znaleziony błąd
         List<Integer> tmp = new Vector<>();
         List<Integer> result = new Vector<>();
@@ -202,6 +209,6 @@ public class Algorithm {
             HT.clear();
             error = 0;
         }
-        return result;
+        return new String(this.BinaryToAsci(result));
     }
 }
