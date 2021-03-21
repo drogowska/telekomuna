@@ -12,23 +12,25 @@ public class Controller {
     public TextArea textAreaSender;
     public TextArea textAreaReceiver;
     Algorithm algorithm = new Algorithm();
+    private String loadedText;
 
     @FXML
     public void onActionLoadFileSender(ActionEvent actionEvent) throws IOException {
         loadFile(textAreaSender);
+        loadedText = textAreaSender.getText();
     }
 
     @FXML
-    public void onActionEncode(ActionEvent actionEvent) throws FileNotFoundException {
-        // zapis do pliku zakodowanej wiadomosci
+    public void onActionEncode(ActionEvent actionEvent){
+        List<Integer> tmp = algorithm.prepareStringToList(loadedText);
+        List<Integer> codedTextAsList = algorithm.Encode(tmp);
+        String codedTextAsString = new String(algorithm.BinaryToAsci(codedTextAsList));
+
         FileChooser fileChooser = new FileChooser();
         File file = fileChooser.showSaveDialog(null);
 
         if(file != null){
-            List<Integer> text = algorithm.prepareStringToList(textAreaReceiver.getText());
-            List<Integer> codedText = algorithm.Encode(text);
-            String newText = algorithm.BinaryToBinaryString(codedText);
-            SaveFile(newText, file);
+            saveTextToFile(codedTextAsString, file);
         }
     }
 
@@ -38,7 +40,7 @@ public class Controller {
     }
 
     @FXML
-    public void onActionRepair(ActionEvent actionEvent) throws IOException {
+    public void onActionRepair(ActionEvent actionEvent){
         List<Integer> textToCorrect = algorithm.prepareStringToList(textAreaReceiver.getText());
         String correctedText = algorithm.Correct(textToCorrect);
         textAreaReceiver.setText(correctedText);
@@ -55,16 +57,14 @@ public class Controller {
         }
     }
 
-    private void SaveFile(String content, File file){
+    private void saveTextToFile(String content, File file) {
         try {
-            FileWriter fileWriter;
-
-            fileWriter = new FileWriter(file);
-            fileWriter.write(content);
-            fileWriter.close();
+            PrintWriter writer;
+            writer = new PrintWriter(file);
+            writer.println(content);
+            writer.close();
         } catch (IOException ex) {
             System.out.println(ex);
         }
-
     }
 }
