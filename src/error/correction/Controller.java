@@ -26,15 +26,9 @@ public class Controller {
     @FXML
     public void onActionEncode(ActionEvent actionEvent){
         List<Integer> tmp = algorithm.prepareStringToList(loadedText);
-        //List<Integer> codedTextAsList = algorithm.Encode(tmp);
-        //textToFix = new String(algorithm.BinaryToAsci(codedTextAsList));
+        List<Integer> codedTextAsList = algorithm.Encode(tmp);
 
-        //Vector<Integer> V = (Vector<Integer>) algorithm.BinaryStringToBinary(algorithm.convertCharsToBinaryString(loadedText));
-        //Vector<Integer> V =
-
-        List<Integer> codedTextAsList = algorithm.Encode(tmp);//algorithm.BinaryToAsci(codedTextAsList));
         list = codedTextAsList;
-
 
         textToFix = new String(algorithm.BinaryToAsci(codedTextAsList));
 
@@ -46,15 +40,13 @@ public class Controller {
         }
 
     }
-    private List<Integer> test(List<Integer> list) {
-        for(int i=0;i<list.size();i++){
-                if(i%8 == 0) {
-                    if (this.list.get(i) != list.get(i)) {
-                        list.set(i, 1);
-                    }
-                }
+    private List<Integer> test(List<Integer> lista) {
+        for(int i=8;i<lista.size();i+=16){
+            if (this.list.get(i) != lista.get(i)) {
+                lista.set(i, 1);
+            }
         }
-        return list;
+        return lista;
     }
 
     @FXML
@@ -64,23 +56,17 @@ public class Controller {
         String fullPath = selectedFile.getAbsolutePath();
         if (selectedFile != null) {
             BufferedReader fileReader = new BufferedReader(new FileReader(fullPath));
-            String message = fileReader.readLine();
-            List<Integer> v = algorithm.prepareStringToList(message);//algorithm.BinaryStringToBinary(message);
-
-            v = test(v);
-            list = v;
-
-
-            textToFix = new String(algorithm.BinaryToAsci(v));
-            String tmp = new String(algorithm.BinaryToAsci(algorithm.Decode(v)));
-            textAreaReceiver.setText(tmp);
-
+            textToFix = fileReader.readLine();
+            String m = algorithm.prepareListToString(algorithm.Decode(algorithm.prepareStringToList(textToFix)));
+            textAreaReceiver.setText(m);
         }
     }
 
     @FXML
     public void onActionRepair(ActionEvent actionEvent){
-        List<Integer> correctedText = algorithm.Correct(list);
+        List<Integer> toFix = algorithm.prepareStringToList(textToFix);
+        toFix = test(toFix);
+        List<Integer> correctedText = algorithm.Correct(toFix);
         String tmp = new String(algorithm.BinaryToAsci(algorithm.Decode(correctedText)));
 
         textAreaReceiver.setText(tmp);
