@@ -9,19 +9,21 @@ public class Algorithm {
 
     private static int[][] H = {
             //Macierz H (parzystości) ma nie posiadać kolumny zerowej,
-            //identycznych kolumn oraz
-            //żadna z kolumn nie może być sumą dwóch innych
+                                    //identycznych kolumn oraz
+                                    //żadna z kolumn nie może być sumą dwóch innych
 
-            //g(x)=100101011
+                                    //g(x)=100101011
+                                    //http://www.ece.unb.ca/cgi-bin/tervo/polygen2.pl
 
-            {1, 1, 1, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0},
-            {1, 1, 1, 1, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0},
-            {1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0},
-            {0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0},
-            {0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0},
-            {0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0},
-            {0, 0, 1, 1, 1, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0},
-            {1, 1, 1, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1}
+            {1, 1, 1, 1, 0, 1, 0, 0,    1, 0, 0, 0, 0, 0, 0, 0},
+            {1, 1, 1, 1, 1, 0, 1, 0,    0, 1, 0, 0, 0, 0, 0, 0},
+            {1, 1, 1, 1, 1, 1, 0, 1,    0, 0, 1, 0, 0, 0, 0, 0},
+            {0, 0, 0, 0, 1, 0, 1, 0,    0, 0, 0, 1, 0, 0, 0, 0},
+            {0, 0, 0, 0, 0, 1, 0, 1,    0, 0, 0, 0, 1, 0, 0, 0},
+            {0, 1, 1, 1, 0, 1, 1, 0,    0, 0, 0, 0, 0, 1, 0, 0},
+            {0, 0, 1, 1, 1, 0, 1, 1,    0, 0, 0, 0, 0, 0, 1, 0},
+            {1, 1, 1, 0, 1, 0, 0, 1,    0, 0, 0, 0, 0, 0, 0, 1}
+
     };
 
     private int m = 8; //zmienna określająca długość wiadomości
@@ -30,14 +32,25 @@ public class Algorithm {
 
     //konwersja znaku ASCI do kodu binarnego zapisanego jako string
     private String AsciToBinaryString(char text) {
-        String tmp = "";
-        StringBuilder stringBuilder = new StringBuilder();
-        tmp += String.valueOf(Integer.valueOf(Integer.toBinaryString(text)));  //zamiana znaku na postać binarną
-        stringBuilder.append(tmp);
-        while (stringBuilder.length() % 8 != 0) {               //uzupełnienie 0 na początku do 8 bitów wiadomości
-            stringBuilder.insert(0, '0');
-        }
-        return stringBuilder.toString().trim();             //usuwa znak nowej lini
+//        String tmp = "";
+//        StringBuilder stringBuilder = new StringBuilder();
+//        tmp = String.valueOf(Integer.valueOf(Integer.toBinaryString(text)));  //zamiana znaku na postać binarną
+//        stringBuilder.append(tmp);
+//        while (stringBuilder.length() % 8 != 0) {               //uzupełnienie 0 na początku do 8 bitów wiadomości
+//            stringBuilder.insert(0, '0');
+//        }
+//        return stringBuilder.toString().trim();             //usuwa znak nowej linii
+
+        StringBuilder binary = new StringBuilder();
+            int val = text;
+            for (int i = 0; i < 8; i++)
+            {
+                binary.append((val & 128) == 0 ? 0 : 1);
+                val <<= 1;
+            }
+            // binary.append(' ');
+
+        return binary.toString();
     }
 
     //konwersja wyrazu (ciągu znaków ASCI) do stringa w postaci binarnej
@@ -86,10 +99,10 @@ public class Algorithm {
             znak = 0;
             for (int i = 0; i < 8; i++) {
                 znak += bin.get(7 + (j * 8) - i) * Math.pow(2, i);
-                znak %= 128;
                 // zamiana zer i jedynek na liczbę w zapisie dzisiętnym, która jest
-                // interpretowana jako znak z tablicy ASCI
+                znak %= 128;                                       // interpretowana jako znak z tablicy ASCI
             }
+
             tab[j] = znak;
         }
         return tab;
@@ -102,7 +115,7 @@ public class Algorithm {
         for (int i = 0; i < v.size(); i++) {
             tmp.add(v.get(i));
         }
-        return multiply(v, tmp, n);
+        return multiply(v, tmp, n);     //wykonanie mnożenia wiadomości i macierzy H
     }
 
     public List<Integer> multiply(List<Integer> v, List<Integer> tmp, int size) {
@@ -178,7 +191,7 @@ public class Algorithm {
                     sum.add((H[k][i] + H[k][j]) % 2);   //operacja %2 aby otrzymać 0 lub 1
 
                     if (HT.get(k) == sum.get(k))
-                        tmp = true;//sprawdzenie czy suma dwóch kolumn jest równa kolumnie z macierzy HT
+                        tmp = true;                 //sprawdzenie czy suma dwóch kolumn jest równa kolumnie z macierzy HT
                 }
                     if (tmp) {
                         T.set(i, (T.get(i) == 1 ? 0 : 1));      //jeżeli tak to znaleziono błędy i następuje negacja bitu

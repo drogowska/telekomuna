@@ -7,6 +7,7 @@ import javafx.stage.FileChooser;
 
 import java.io.*;
 import java.util.List;
+import java.util.Vector;
 
 public class Controller {
     public TextArea textAreaSender;
@@ -14,6 +15,7 @@ public class Controller {
     Algorithm algorithm = new Algorithm();
     private String loadedText;
     private String textToFix;
+    private List<Integer> list;
 
     @FXML
     public void onActionLoadFileSender(ActionEvent actionEvent) throws IOException {
@@ -24,16 +26,35 @@ public class Controller {
     @FXML
     public void onActionEncode(ActionEvent actionEvent){
         List<Integer> tmp = algorithm.prepareStringToList(loadedText);
-        List<Integer> codedTextAsList = algorithm.Encode(tmp);
+        //List<Integer> codedTextAsList = algorithm.Encode(tmp);
+        //textToFix = new String(algorithm.BinaryToAsci(codedTextAsList));
+
+        //Vector<Integer> V = (Vector<Integer>) algorithm.BinaryStringToBinary(algorithm.convertCharsToBinaryString(loadedText));
+        //Vector<Integer> V =
+
+        List<Integer> codedTextAsList = algorithm.Encode(tmp);//algorithm.BinaryToAsci(codedTextAsList));
+        list = codedTextAsList;
+
+
         textToFix = new String(algorithm.BinaryToAsci(codedTextAsList));
 
         FileChooser fileChooser = new FileChooser();
         File file = fileChooser.showSaveDialog(null);
 
         if(file != null){
-            saveTextToFile(textToFix, file);
+            saveTextToFile(new String(algorithm.BinaryToAsci(codedTextAsList)), file);
         }
 
+    }
+    private List<Integer> test(List<Integer> list) {
+        for(int i=0;i<list.size();i++){
+                if(i%8 == 0) {
+                    if (this.list.get(i) != list.get(i)) {
+                        list.set(i, 1);
+                    }
+                }
+        }
+        return list;
     }
 
     @FXML
@@ -44,16 +65,24 @@ public class Controller {
         if (selectedFile != null) {
             BufferedReader fileReader = new BufferedReader(new FileReader(fullPath));
             String message = fileReader.readLine();
-            String tmp = new String(algorithm.BinaryToAsci(algorithm.Decode(algorithm.prepareStringToList(message))));
+            List<Integer> v = algorithm.prepareStringToList(message);//algorithm.BinaryStringToBinary(message);
+
+            v = test(v);
+            list = v;
+
+
+            textToFix = new String(algorithm.BinaryToAsci(v));
+            String tmp = new String(algorithm.BinaryToAsci(algorithm.Decode(v)));
             textAreaReceiver.setText(tmp);
+
         }
     }
 
     @FXML
     public void onActionRepair(ActionEvent actionEvent){
-        List<Integer> textToCorrect = algorithm.prepareStringToList(textToFix);
-        List<Integer> correctedText = algorithm.Correct(textToCorrect);
+        List<Integer> correctedText = algorithm.Correct(list);
         String tmp = new String(algorithm.BinaryToAsci(algorithm.Decode(correctedText)));
+
         textAreaReceiver.setText(tmp);
     }
 
