@@ -187,13 +187,14 @@ public class Algorithm {
         for (int i = 0; i < m + n; i++) {
             for (int j = i + 1; j < n + m; j++) {
                 for (int k = 0; k < n; k++) {             //obliczenie sumy elementów dwóch kolejnych kolumn i przepisanie wyniku do wektora sum
-                    sum.add((H[k][i] ^ H[k][j]));   //operacja %2 aby otrzymać 0 lub 1
+                    sum.add((H[k][i] + H[k][j]) % 2);   //operacja %2 aby otrzymać 0 lub 1
                 }
                 if (HT.equals(sum)) {
                     T.set(i, (T.get(i) == 1 ? 0 : 1));      //jeżeli tak to znaleziono błędy i następuje negacja bitu
                     T.set(j, (T.get(j) == 1 ? 0 : 1));
                     return true;
                 }
+                sum.clear();
             }
         }
 
