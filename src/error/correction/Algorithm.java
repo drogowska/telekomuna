@@ -55,6 +55,11 @@ public class Algorithm {
         return result;
     }
 
+    public String prepareListToString(List<Integer> text) {
+        char[] tmp = this.BinaryToAsci(text);
+        return new String(tmp);
+    }
+
     //konwersja bitów zapisanych w stringu do vektora bitów reprezentowanych przez inty
     public List<Integer> BinaryStringToBinary(String text) {
         List<Integer> v = new Vector<>();
@@ -80,7 +85,9 @@ public class Algorithm {
         for (int j = 0; j < bin.size() / 8; j++) {
             znak = 0;
             for (int i = 0; i < 8; i++) {
-                znak += bin.get(7 + (j * 8) - i) * Math.pow(2, i); // zamiana zer i jedynek na liczbę w zapisie dzisiętnym, która jest
+                znak += bin.get(7 + (j * 8) - i) * Math.pow(2, i);
+                znak %= 128;
+                // zamiana zer i jedynek na liczbę w zapisie dzisiętnym, która jest
                 // interpretowana jako znak z tablicy ASCI
             }
             tab[j] = znak;
@@ -185,7 +192,7 @@ public class Algorithm {
     }
 
     //funkcja sprawdzająca czy wiadomość posiada błędy, jeśli tak to znajduje je i poprawia
-    public String Correct(List<Integer> T) {
+    public List<Integer> Correct(List<Integer> T) {
         int error = 0;                          //zmienna określająca czy został znaleziony błąd
         List<Integer> tmp = new Vector<>();
         List<Integer> result = new Vector<>();
@@ -209,6 +216,6 @@ public class Algorithm {
             HT.clear();
             error = 0;
         }
-        return new String(this.BinaryToAsci(result));
+        return result;
     }
 }

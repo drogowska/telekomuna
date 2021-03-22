@@ -13,6 +13,7 @@ public class Controller {
     public TextArea textAreaReceiver;
     Algorithm algorithm = new Algorithm();
     private String loadedText;
+    private String textToFix;
 
     @FXML
     public void onActionLoadFileSender(ActionEvent actionEvent) throws IOException {
@@ -24,26 +25,36 @@ public class Controller {
     public void onActionEncode(ActionEvent actionEvent){
         List<Integer> tmp = algorithm.prepareStringToList(loadedText);
         List<Integer> codedTextAsList = algorithm.Encode(tmp);
-        String codedTextAsString = new String(algorithm.BinaryToAsci(codedTextAsList));
+        textToFix = new String(algorithm.BinaryToAsci(codedTextAsList));
 
         FileChooser fileChooser = new FileChooser();
         File file = fileChooser.showSaveDialog(null);
 
         if(file != null){
-            saveTextToFile(codedTextAsString, file);
+            saveTextToFile(textToFix, file);
         }
+
     }
 
     @FXML
     public void onActionLoadFileReceiver(ActionEvent actionEvent) throws IOException {
-        loadFile(textAreaReceiver);
+        FileChooser fileChooser = new FileChooser();
+        File selectedFile = fileChooser.showOpenDialog(null);
+        String fullPath = selectedFile.getAbsolutePath();
+        if (selectedFile != null) {
+            BufferedReader fileReader = new BufferedReader(new FileReader(fullPath));
+            String message = fileReader.readLine();
+            String tmp = new String(algorithm.BinaryToAsci(algorithm.Decode(algorithm.prepareStringToList(message))));
+            textAreaReceiver.setText(tmp);
+        }
     }
 
     @FXML
     public void onActionRepair(ActionEvent actionEvent){
-        List<Integer> textToCorrect = algorithm.prepareStringToList(textAreaReceiver.getText());
-        String correctedText = algorithm.Correct(textToCorrect);
-        textAreaReceiver.setText(correctedText);
+        List<Integer> textToCorrect = algorithm.prepareStringToList(textToFix);
+        List<Integer> correctedText = algorithm.Correct(textToCorrect);
+        String tmp = new String(algorithm.BinaryToAsci(algorithm.Decode(correctedText)));
+        textAreaReceiver.setText(tmp);
     }
 
     private void loadFile(TextArea textArea) throws IOException {
@@ -59,10 +70,9 @@ public class Controller {
 
     private void saveTextToFile(String content, File file) {
         try {
-            PrintWriter writer;
-            writer = new PrintWriter(file);
-            writer.println(content);
-            writer.close();
+            FileWriter fw = new FileWriter(file);
+            fw.write(content);
+            fw.close();
         } catch (IOException ex) {
             System.out.println(ex);
         }
