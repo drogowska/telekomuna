@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="error.correction.Controller">
+   <bottom>
+      <Label text="Daria Rogowska, Magdalena Stopka" BorderPane.alignment="CENTER" />
+   </bottom>
+   <top>
+      <Label text="Program symulujący transmisję danych" BorderPane.alignment="CENTER">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+   </top>
+   <left>
+      <AnchorPane prefHeight="360.0" prefWidth="293.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label layoutX="119.0" layoutY="14.0" text="Nadawca" textFill="#472fba">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Button fx:id="loadFileSender" layoutX="56.0" layoutY="273.0" mnemonicParsing="false" onAction="#onActionLoadFileSender" text="Wczytaj" />
+            <Button layoutX="175.0" layoutY="273.0" mnemonicParsing="false" onAction="#onActionEncode" text="Zakoduj" />
+            <TextArea fx:id="textAreaSender" layoutX="47.0" layoutY="48.0" prefHeight="200.0" prefWidth="200.0" />
+         </children>
+      </AnchorPane>
+   </left>
+   <center>
+      <AnchorPane prefHeight="360.0" prefWidth="310.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label layoutX="126.0" layoutY="14.0" text="Odbiorca" textFill="#58b91b">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Button layoutX="69.0" layoutY="276.0" mnemonicParsing="false" onAction="#onActionLoadFileReceiver" text="Wczytaj" />
+            <Button layoutX="181.0" layoutY="276.0" mnemonicParsing="false" onAction="#onActionRepair" text="Popraw" />
+            <TextArea fx:id="textAreaReceiver" layoutX="53.0" layoutY="50.0" prefHeight="200.0" prefWidth="200.0" />
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>
