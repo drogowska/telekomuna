@@ -44,15 +44,20 @@ public class ReaderWriter {
 
     public void write(Vector<Byte> bytes) throws Exception {
         int[] noOfBytesWritten = new int[bytes.size()];
-
-        WriteFile(com,
-                Pointer.createConstant(bytes.get(0)),
-                bytes.size(),
-                noOfBytesWritten,
-                null);
-        if(noOfBytesWritten.length != bytes.size()){
-            throw new Exception("Can't write bytes!");
+        int[] wrtn = {0};
+        byte[] bytes1 = new byte[bytes.size()];
+        for(int i=0;i<bytes1.length;i++) {
+            bytes1[i] = bytes.get(i);
+            System.out.println(bytes1[i]);
         }
+        WriteFile(com,
+                bytes1,//Pointer.createConstant(bytes.get(0)),
+                bytes1.length,
+                wrtn);
+                //null);
+//        if(wrtn.length != bytes1.size()){
+//            throw new Exception("Can't write bytes!");
+//        }
     }
 
 
