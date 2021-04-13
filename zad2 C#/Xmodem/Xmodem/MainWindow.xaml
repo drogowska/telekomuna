@@ -1,0 +1,29 @@
+﻿<Window x:Class="Xmodem.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Xmodem"
+        mc:Ignorable="d"
+        Title="Xmodem" Height="450" Width="330">
+    <Grid RenderTransformOrigin="1,0.504">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="122*"/>
+            <ColumnDefinition Width="81*"/>
+            <ColumnDefinition Width="119*"/>
+        </Grid.ColumnDefinitions>
+        <RadioButton Content="Suma kontrolna" HorizontalAlignment="Left" Margin="31,270,0,0" VerticalAlignment="Top" Checked="RadioButton_Checksum" Grid.ColumnSpan="2" Grid.Column="1"/>
+        <RadioButton Content="CRC16" HorizontalAlignment="Left" Margin="60,270,0,0" VerticalAlignment="Top" Checked="RadioButton_CRC16" Width="62"/>
+        <ComboBox HorizontalAlignment="Left" Margin="60,59,0,0" VerticalAlignment="Top" Width="196" DataContext="COM Port" Grid.ColumnSpan="3" >
+            <ComboBoxItem Content=""/>
+        </ComboBox>
+        <ComboBox HorizontalAlignment="Left" Margin="60,112,0,0" VerticalAlignment="Top" Width="196" DataContext="COM Port" Grid.ColumnSpan="3">
+            <ComboBoxItem Content=""></ComboBoxItem>
+        </ComboBox>
+
+        <ComboBox HorizontalAlignment="Left" Margin="60,164,0,0" VerticalAlignment="Top" Width="196" DataContext="COM Port" Grid.ColumnSpan="3"/>
+        <ComboBox HorizontalAlignment="Left" Margin="60,209,0,0" VerticalAlignment="Top" Width="196" DataContext="COM Port" Grid.ColumnSpan="3"/>
+        <Button Content="Połącz" HorizontalAlignment="Left" Margin="60,340,0,0" VerticalAlignment="Top" Width="196" Click="Button_Click" Height="25" Grid.ColumnSpan="3"/>
+        <ComboBox HorizontalAlignment="Left" Margin="-106,-112,0,0" VerticalAlignment="Top" Width="120"/>
+    </Grid>
+</Window>
