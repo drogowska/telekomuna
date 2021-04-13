@@ -12,41 +12,38 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.IO;
-using System.Windows;
 using Microsoft.Win32;
 
 namespace Xmodem
 {
     /// <summary>
-    /// Logika interakcji dla klasy Window1.xaml
+    /// Logika interakcji dla klasy Window2.xaml
     /// </summary>
-    public partial class Window1 : Window
+    public partial class Window2 : Window
     {
-        bool crc;
+        private bool crc;
         private PortConnection com;
-        public Window1(bool crc16, PortConnection port)
+        public Window2(bool crc16, PortConnection port)
         {
-            this.crc = crc16;
-            this.com = port;
+            crc = crc16;
+            com = port;
             InitializeComponent();
-        }
-
-        private void Button_Click_Close(object sender, RoutedEventArgs e)
-        {
-            com.close();
-            this.Close();
-
         }
 
         private void Button_Click_Choose(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             if (openFileDialog.ShowDialog() == true)
-               File.ReadAllText(openFileDialog.FileName);
-
+                File.ReadAllText(openFileDialog.FileName);
         }
 
-        private void Button_Click_Send(object sender, RoutedEventArgs e)
+        private void Button_Click_Close(object sender, RoutedEventArgs e)
+        {
+            com.close();
+            this.Close();
+        }
+
+        private void Button_Click_Recive(object sender, RoutedEventArgs e)
         {
 
         }

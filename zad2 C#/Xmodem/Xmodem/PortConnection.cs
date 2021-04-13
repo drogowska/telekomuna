@@ -1,16 +1,10 @@
 ﻿using System;
 using System.IO.Ports;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Win32.SafeHandles;
-using System.Runtime.InteropServices;
-using System.Threading;
 
 namespace Xmodem
 {
-    class PortConnection
+    public class PortConnection
     {
         private SerialPort serialPort;
         private bool con;
@@ -21,12 +15,15 @@ namespace Xmodem
 
         public PortConnection(String name, int boundRate, Parity parity, StopBits stopBits)
         {
-            serialPort = new SerialPort(name, boundRate, parity, byteSize, stopBits)
-            {
-                WriteTimeout = 10000,       //ms
-                ReadTimeout = 1000,
-                Handshake = Handshake.None
-            };
+            serialPort = new SerialPort(name);
+            
+            serialPort.BaudRate = boundRate;
+            serialPort.DataBits = byteSize;
+            serialPort.Parity = parity;
+            serialPort.StopBits = stopBits;
+            serialPort.Handshake = Handshake.None;
+            serialPort.WriteTimeout = 10000; //ms
+            serialPort.ReadTimeout = 1000;
             serialPort.Encoding = Encoding.UTF8;
 
         }
@@ -34,6 +31,11 @@ namespace Xmodem
         public void write(byte[] bytes)
         {
             serialPort.Write(bytes, 0, bytes.Length);
+        }
+
+        public void write(byte buffer)
+        {
+            serialPort.Write(new byte[] { buffer }, 0, 1);
         }
 
         //otwarcie portu
@@ -46,24 +48,44 @@ namespace Xmodem
         //funkcja zamyka otwarty port
         public void close()
         {
-            if(serialPort.IsOpen)
-            serialPort.Close();
+            if (serialPort.IsOpen)
+                serialPort.Close();
         }
 
-        public void read()
+        //public void read()
+        //{
+        //    while (con)
+        //    {
+        //        try
+        //        {
+        //            string message = serialPort.ReadLine();
+        //            Console.WriteLine(message);
+        //            con = false;
+        //        }
+        //        catch (TimeoutException) { }
+        //    }
+        //}
+
+        public byte[] read()
         {
-            while (con)
+            //List<byte> byteList = new List<byte>();
+            byte[] byteArray;
+            do
             {
-                try
-                {
-                    string message = serialPort.ReadLine();
-                    Console.WriteLine(message);
-                    con = false;
-                }
-                catch (TimeoutException) { }
-            }
+                int bytesToRead = serialPort.BytesToRead;
+                byteArray = new byte[bytesToRead];
+                serialPort.Read(byteArray, 0, bytesToRead);
+                //byteList.AddRange(byteArray);
+                System.Threading.Tasks.Task.Delay(10).Wait();
+            } while (serialPort.BytesToRead > 0);
+            return byteArray;
         }
 
-       
+        public byte readSingleByte()
+        {
+            return (byte)serialPort.ReadByte();
+        }
+
+
     }
 }

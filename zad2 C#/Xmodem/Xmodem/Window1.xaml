@@ -5,8 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Xmodem"
         mc:Ignorable="d"
-        Title="Window1" Height="450" Width="800">
+        Title="XModem" Height="450" Width="330">
     <Grid>
+        <Button Name="Bclose" Content="Zmknij port" HorizontalAlignment="Left" Margin="42,365,0,0" VerticalAlignment="Top" Width="235" Height="25" Click="Button_Click_Close"/>
+        <Button Name="BSend" Content="Wyślij" HorizontalAlignment="Left" Margin="42,279,0,0" VerticalAlignment="Top" Width="235" Height="25" Click="Button_Click_Send"/>
+        <Button Name="BChoose" Content="Wybierz plik" HorizontalAlignment="Left" Margin="42,80,0,0" VerticalAlignment="Top" Width="235" Height="25" Click="Button_Click_Choose"/>
         
+
+
+
     </Grid>
 </Window>

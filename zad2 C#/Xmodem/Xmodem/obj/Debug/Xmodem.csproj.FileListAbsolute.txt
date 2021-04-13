@@ -15,3 +15,22 @@ E:\Daria\studia\semestr 4\Telekomunikacja i przetwarzanie sygnału\zad2\Xmodem\X
 E:\Daria\studia\semestr 4\Telekomunikacja i przetwarzanie sygnału\zad2\Xmodem\Xmodem\obj\Debug\Xmodem.pdb
 E:\Daria\studia\semestr 4\Telekomunikacja i przetwarzanie sygnału\zad2\Xmodem\Xmodem\obj\Debug\Window1.g.cs
 E:\Daria\studia\semestr 4\Telekomunikacja i przetwarzanie sygnału\zad2\Xmodem\Xmodem\obj\Debug\Window1.baml
+E:\Daria\studia\semestr 4\Telekomunikacja i przetwarzanie sygnału\telekomuna\zad2 C#\Xmodem\Xmodem\obj\Debug\Xmodem.csprojAssemblyReference.cache
+E:\Daria\studia\semestr 4\Telekomunikacja i przetwarzanie sygnału\telekomuna\zad2 C#\Xmodem\Xmodem\obj\Debug\MainWindow.g.cs
+E:\Daria\studia\semestr 4\Telekomunikacja i przetwarzanie sygnału\telekomuna\zad2 C#\Xmodem\Xmodem\obj\Debug\Window1.g.cs
+E:\Daria\studia\semestr 4\Telekomunikacja i przetwarzanie sygnału\telekomuna\zad2 C#\Xmodem\Xmodem\obj\Debug\App.g.cs
+E:\Daria\studia\semestr 4\Telekomunikacja i przetwarzanie sygnału\telekomuna\zad2 C#\Xmodem\Xmodem\obj\Debug\Xmodem_MarkupCompile.cache
+E:\Daria\studia\semestr 4\Telekomunikacja i przetwarzanie sygnału\telekomuna\zad2 C#\Xmodem\Xmodem\obj\Debug\Xmodem_MarkupCompile.lref
+E:\Daria\studia\semestr 4\Telekomunikacja i przetwarzanie sygnału\telekomuna\zad2 C#\Xmodem\Xmodem\obj\Debug\Xmodem.exe
+E:\Daria\studia\semestr 4\Telekomunikacja i przetwarzanie sygnału\telekomuna\zad2 C#\Xmodem\Xmodem\obj\Debug\Xmodem.pdb
+E:\Daria\studia\semestr 4\Telekomunikacja i przetwarzanie sygnału\telekomuna\zad2 C#\Xmodem\Xmodem\bin\Debug\Xmodem.exe.config
+E:\Daria\studia\semestr 4\Telekomunikacja i przetwarzanie sygnału\telekomuna\zad2 C#\Xmodem\Xmodem\bin\Debug\Xmodem.exe
+E:\Daria\studia\semestr 4\Telekomunikacja i przetwarzanie sygnału\telekomuna\zad2 C#\Xmodem\Xmodem\bin\Debug\Xmodem.pdb
+E:\Daria\studia\semestr 4\Telekomunikacja i przetwarzanie sygnału\telekomuna\zad2 C#\Xmodem\Xmodem\obj\Debug\MainWindow.baml
+E:\Daria\studia\semestr 4\Telekomunikacja i przetwarzanie sygnału\telekomuna\zad2 C#\Xmodem\Xmodem\obj\Debug\Window1.baml
+E:\Daria\studia\semestr 4\Telekomunikacja i przetwarzanie sygnału\telekomuna\zad2 C#\Xmodem\Xmodem\obj\Debug\Xmodem.g.resources
+E:\Daria\studia\semestr 4\Telekomunikacja i przetwarzanie sygnału\telekomuna\zad2 C#\Xmodem\Xmodem\obj\Debug\Xmodem.Properties.Resources.resources
+E:\Daria\studia\semestr 4\Telekomunikacja i przetwarzanie sygnału\telekomuna\zad2 C#\Xmodem\Xmodem\obj\Debug\Xmodem.csproj.GenerateResource.cache
+E:\Daria\studia\semestr 4\Telekomunikacja i przetwarzanie sygnału\telekomuna\zad2 C#\Xmodem\Xmodem\obj\Debug\Xmodem.csproj.CoreCompileInputs.cache
+E:\Daria\studia\semestr 4\Telekomunikacja i przetwarzanie sygnału\telekomuna\zad2 C#\Xmodem\Xmodem\obj\Debug\Window2.g.cs
+E:\Daria\studia\semestr 4\Telekomunikacja i przetwarzanie sygnału\telekomuna\zad2 C#\Xmodem\Xmodem\obj\Debug\Window2.baml
