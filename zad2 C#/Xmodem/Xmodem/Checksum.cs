@@ -12,12 +12,12 @@ namespace Xmodem
         public static byte algebraicSum(byte[] bytes)
         {
             int sum = 0;
-            for (int i=0;i<bytes.Length;i++)
+            for (int i=0;i<128;i++)
             {
                 sum += bytes[i];
             } 
-            sum %= 256;
-            return (byte)sum;
+            //sum %= 256;
+            return (byte)(sum %256);
 
         }
 

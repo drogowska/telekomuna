@@ -66,14 +66,6 @@ namespace Xmodem
             byte[] data = tr.ReceiveBytes();
             file.Write(data,0,data.Length);
             file.Close();
-
-            //Receiver re = new Receiver(com);          
-            //List<byte> bytes = re.receiveFile(crc);
-            //foreach(byte b in bytes)
-            //{
-            //    file.WriteByte(b);
-            //}
-            //file.Close();
             
         }
 

@@ -19,13 +19,14 @@ namespace Xmodem
         static byte CAN = 0x18;
         static byte C = 0x43;
 
-        private bool start;
         private SerialPort serialPort;
         private bool crc;
         private int byteSize = 8;
         private byte[] bytes;
         private byte[] receivedBytes = new byte[128];
+        private byte[] final;
         int noOfBlocks = 0;
+
 
 
         public Receiver(String name, int boundRate, Parity parity, StopBits stopBits, bool crc)
@@ -61,26 +62,26 @@ namespace Xmodem
                 serialPort.Close();
         }
 
-        private void startTransmition(bool crc)
-        {
-            DateTime time = DateTime.Now;
-            while(true)//(DateTime.Now - time <TimeSpan.FromSeconds(60))
-            {
-                if (crc)
-                {
-                    serialPort.Write(new byte[] { C },0,1);
-                }
-                else
-                { //suma algebraiczna
-                    open();
-                    serialPort.Write( new byte[] { NAK },0,1);
-                }
-                Thread.Sleep(3000);
-                serialPort.DataReceived += new SerialDataReceivedEventHandler(dataReceived);
-                Console.ReadLine();
+        //private void startTransmition(bool crc)
+        //{
+        //    DateTime time = DateTime.Now;
+        //    while(true)//(DateTime.Now - time <TimeSpan.FromSeconds(60))
+        //    {
+        //        if (crc)
+        //        {
+        //            serialPort.Write(new byte[] { C },0,1);
+        //        }
+        //        else
+        //        { //suma algebraiczna
+        //            open();
+        //            serialPort.Write( new byte[] { NAK },0,1);
+        //        }
+        //        Thread.Sleep(3000);
+        //        serialPort.DataReceived += new SerialDataReceivedEventHandler(dataReceived);
+        //        Console.ReadLine();
                
-            }  
-        }
+        //    }  
+        //}
 
       
         public byte[] ReceiveBytes()
@@ -88,6 +89,7 @@ namespace Xmodem
             //startTransmition(crc);
             if (crc)
             {
+                open();
                 serialPort.Write(new byte[] { C }, 0, 1);
             }
             else
@@ -97,6 +99,8 @@ namespace Xmodem
             }
             serialPort.DataReceived += new SerialDataReceivedEventHandler(dataReceived);
             //if (!serialPort.IsOpen) serialPort.Open();
+
+
             return receivedBytes; 
 
         }
@@ -111,9 +115,8 @@ namespace Xmodem
             switch (bytes[0])
             {
                 case 0x01: //SOH
-                    start = true;
+                    noOfBlocks++;
                     receiveFile(bytes);
-                    noOfBlocks++; //zliczanie ilości otrzymanych bloków
                     break;
                 case 0x04: //EOT
                     serialPort.Write(new byte[] { ACK }, 0, 1);
@@ -134,29 +137,22 @@ namespace Xmodem
         {
 
             byte[] tab = new byte[131];
-            for(int i = 3; i < 131; i++)
+            for(int i = 3; i < 130; i++)
             {
                 receivedBytes[i - 3] = bytes[i];
             }
-            //for (int j = (noOfBlocks) * 128; j < (noOfBlocks + 1) * 128; j++)
-            //{
-            //    receivedBytes[j] = bytes[3+j];       //przepisanie danych otrzymanych do tablicy
-
-            //}
 
             for(int j = 0; j < 130; j++)
             {
                 tab[j] = bytes[j];
             }
-            if (check(tab))
+            if (check(receivedBytes))
             {
                 serialPort.Write(new byte[] { ACK }, 0, 1);
             } else
             {
                 serialPort.Write(new byte[] { NAK }, 0, 1);
-            }
-            
-           
+            }  
         }     
 
         private bool check(byte[] tab)
@@ -174,7 +170,7 @@ namespace Xmodem
             } else
             {
                 byte checksum = Checksum.algebraicSum(tab);
-                if (checksum == bytes[131]) isOK = true;                //nie zgadza się
+                if (checksum == bytes[131]) isOK = true;                
             }
             return isOK;
 
