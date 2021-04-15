@@ -30,6 +30,7 @@ namespace Xmodem
         StopBits stopBits;
         byte[] bytes;
         bool crc;
+        Stream file;
 
         public Window2(bool crc16, string name, int bytes, Parity parity, StopBits stop)
         {
@@ -47,10 +48,10 @@ namespace Xmodem
             if (openFileDialog.ShowDialog() == true)
             {
                 File.ReadAllText(openFileDialog.FileName);
-                //file = openFileDialog.OpenFile();
+                file = openFileDialog.OpenFile();
 
-                buf = File.ReadAllBytes(openFileDialog.FileName);// ReadAllBytes(openFileDialog.FileName);
-                tr = new Receiver(name, boundRate, parity, stopBits, buf, crc);
+                //buf = File.ReadAllBytes(openFileDialog.FileName);// ReadAllBytes(openFileDialog.FileName);
+                tr = new Receiver(name, boundRate, parity, stopBits, crc);
             }
         }
 
@@ -62,7 +63,9 @@ namespace Xmodem
 
         private void Button_Click_Save(object sender, RoutedEventArgs e)
         {
-            tr.ReceiveBytes();
+            byte[] data = tr.ReceiveBytes();
+            file.Write(data,0,data.Length);
+            file.Close();
 
             //Receiver re = new Receiver(com);          
             //List<byte> bytes = re.receiveFile(crc);

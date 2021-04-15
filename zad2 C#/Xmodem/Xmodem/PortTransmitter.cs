@@ -74,7 +74,9 @@ namespace Xmodem
             {
                 case 0x43: //c
                     //crc = true;
+                    
                     sendBytes();
+                    
                     break;
                 case 0x06: //ack
                     if (flag)
@@ -104,54 +106,62 @@ namespace Xmodem
                                                                     //byte[] all = new byte[crc ? 133 : 132];     //tablica będąca konkatenacją tablicy header i block
             flag = true;
 
-            int blocks = (int)Math.Ceiling(d: (decimal)data.Length / 128);       //obliczenie ilości bloków jako sufit wielkości danych podzielnych przez 128 (rozmiar bloku)
-            
+            //int blocks = (int)Math.Ceiling(d: (decimal)data.Length / 128);       //obliczenie ilości bloków jako sufit wielkości danych podzielnych przez 128 (rozmiar bloku)
+            int blocks = (int)(data.Length / 128);       //obliczenie ilości bloków jako sufit wielkości danych podzielnych przez 128 (rozmiar bloku)
+
             //stworzenie nagłówka 
             block[0] = SOH;                            //znak SOH
             block[1] = (byte)(noOfBlock + 1);          //numer bloku
             block[2] = (byte)(255 - (noOfBlock + 1));  //dopełnienie numeru bloku do 255
 
-                int k = 3;
-                int tmp = 0;
+            int k = 3;
+            int tmp = 0;
             Console.WriteLine(noOfBlock);
             
-            for (int j = (noOfBlock) * 128; j < (noOfBlock+1) * 128; j++)
+            for (int j = (noOfBlock) * 128; j < (noOfBlock+1) * 128 - 1; j++)
             {
                    
-                if (blocks == noOfBlock+1)      //ostatni blok
+                if (blocks == (noOfBlock))      //ostatni blok
                 {
                     if (j >= data.Length)
                     {
-                        for(int l = k; l < 18; l++)
+                        for(int l = k; l < 128; l++)
                         {
                             block[k] = 0;   //dopełnienie zerami
                         }
                         break;
                     }
+                    else
+                    {
+                        block[k] = data[j];
+                    }
                        
                 }
-                block[k] = data[j];  
+                else
+                {
+                    block[k] = data[j]; //po wysłaniu wszytskiego odbiiornik wysyła nak i się indeksy wywyalają
+                }
+                 
                 k++;  
             }
 
 
 
-                if (!crc)
-                {       //obliczenie algebraicznej sumy kontrolnej i wpisanie ich do bloku
-                    block[131] = Checksum.algebraicSum(block);
-                }
-                else
-                {       //obliczenie crc16 i wpisanie wyników do bloku
-                    byte[] checksum = BitConverter.GetBytes(Checksum.crc16(block));
-                    block[131] = checksum[0];
-                    block[132] = checksum[1];
-                }
-                //czyszczenie bloków
-                serialPort.Write(block, 0, block.Length);
+            if (!crc)
+            {       //obliczenie algebraicznej sumy kontrolnej i wpisanie ich do bloku
+                block[131] = Checksum.algebraicSum(block);
+            }
+            else
+            {       //obliczenie crc16 i wpisanie wyników do bloku
+                byte[] checksum = BitConverter.GetBytes(Checksum.crc16(block));
+                block[131] = checksum[1];
+                block[132] = checksum[0];
+            }
+            serialPort.Write(block, 0, block.Length);
 
             
 
-            if ((noOfBlock) * 128 >= data.Length)
+            if ((noOfBlock+1) * 128 >= data.Length)
             {
                 serialPort.Write(new byte[] { EOT }, 0, 1);
                 return;

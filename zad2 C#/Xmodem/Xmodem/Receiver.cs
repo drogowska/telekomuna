@@ -23,15 +23,16 @@ namespace Xmodem
         private SerialPort serialPort;
         private bool crc;
         private int byteSize = 8;
-        private byte[] data;
-        private byte[] receivedBytes;
+        private byte[] bytes;
+        private byte[] receivedBytes = new byte[128];
+        int noOfBlocks = 0;
 
 
-        public Receiver(String name, int boundRate, Parity parity, StopBits stopBits, byte[] bytes, bool crc)
+        public Receiver(String name, int boundRate, Parity parity, StopBits stopBits, bool crc)
         {
             serialPort = new SerialPort(name);
 
-            serialPort.BaudRate = boundRate;
+            serialPort.BaudRate = boundRate; 
             serialPort.DataBits = byteSize;
             serialPort.Parity = parity;
             serialPort.StopBits = stopBits;
@@ -41,7 +42,7 @@ namespace Xmodem
             serialPort.Encoding = Encoding.UTF8;
             this.crc = crc;
 
-            data = bytes;
+            //data = bytes;
             serialPort.Open();
         }
 
@@ -96,13 +97,13 @@ namespace Xmodem
             }
             serialPort.DataReceived += new SerialDataReceivedEventHandler(dataReceived);
             //if (!serialPort.IsOpen) serialPort.Open();
-            return data; 
+            return receivedBytes; 
 
         }
         private void dataReceived(object sender, SerialDataReceivedEventArgs e)
         {
             string received = serialPort.ReadExisting();
-            byte[] bytes = Encoding.Default.GetBytes(received);
+            bytes = Encoding.Default.GetBytes(received);
             Console.WriteLine(received);
             Console.WriteLine(bytes[0]);
 
@@ -112,6 +113,7 @@ namespace Xmodem
                 case 0x01: //SOH
                     start = true;
                     receiveFile(bytes);
+                    noOfBlocks++; //zliczanie ilości otrzymanych bloków
                     break;
                 case 0x04: //EOT
                     serialPort.Write(new byte[] { ACK }, 0, 1);
@@ -130,46 +132,49 @@ namespace Xmodem
         }
         public void receiveFile(byte[] bytes)
         {
-            for (int i = 0; i <128;i++)
+
+            byte[] tab = new byte[131];
+            for(int i = 3; i < 131; i++)
             {
-                data[i] = bytes[3+i];
+                receivedBytes[i - 3] = bytes[i];
+            }
+            //for (int j = (noOfBlocks) * 128; j < (noOfBlocks + 1) * 128; j++)
+            //{
+            //    receivedBytes[j] = bytes[3+j];       //przepisanie danych otrzymanych do tablicy
+
+            //}
+
+            for(int j = 0; j < 130; j++)
+            {
+                tab[j] = bytes[j];
+            }
+            if (check(tab))
+            {
+                serialPort.Write(new byte[] { ACK }, 0, 1);
+            } else
+            {
+                serialPort.Write(new byte[] { NAK }, 0, 1);
             }
             
            
-        }
+        }     
 
-        //private void checkChecksum(byte[] block, List<byte> data) 
-        //{
-        //    byte[] check = connection.read();
-        //    if (Checksum.algebraicSum(block) == check[0]) {
-        //        connection.write(ACK);
-        //        for (int i = 0; i < block.Length; i++)
-        //        {
-        //            data.Add(block[i]); //?
-        //        }
-        //    } else {
-        //        connection.write(NAK);
-        //    }
-        //}
-
-        
-
-        private bool check()
+        private bool check(byte[] tab)
         {
             bool isOK = false;
             if(crc)
             {
-                byte[] checksum = BitConverter.GetBytes(Checksum.crc16(data));
-                if(checksum[0] == receivedBytes[131])
+                byte[] checksum = BitConverter.GetBytes(Checksum.crc16(tab));
+                if(checksum[1] == bytes[131])
                 {
-                    if (checksum[1] == receivedBytes[132])
+                    if (checksum[0] == bytes[132])
                         isOK = true;
                 }
                
             } else
             {
-                byte checksum = Checksum.algebraicSum(data);
-                if (checksum == receivedBytes[131]) isOK = true;
+                byte checksum = Checksum.algebraicSum(tab);
+                if (checksum == bytes[131]) isOK = true;                //nie zgadza się
             }
             return isOK;
 

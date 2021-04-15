@@ -24,12 +24,11 @@ namespace Xmodem
         public static ushort crc16(byte[] bytes)
         {
             ushort crc = 0x0000;
-            
+
             for (int i = 0; i < bytes.Length; i++)
             {
                 crc ^= (ushort)(bytes[i] << 8);
-                int j = 0;
-                do
+                for (int j = 0; j < 8; j++)
                 {
                     if ((crc & 0x8000) > 0)
                     {
@@ -39,10 +38,10 @@ namespace Xmodem
                     {
                         crc <<= 1;
                     }
-                    j++;
-               
-                } while (j < 8);
-            }
+
+                }
+            }   
+             
             return crc;
 
         }
