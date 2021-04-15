@@ -37,16 +37,6 @@ namespace Xmodem
             data = bytes;
         }
 
-        //public void write(byte[] bytes, int offset, int dataLen)
-        //{
-        //    serialPort.Write(bytes, offset, dataLen);
-        //}
-
-        //public void write(byte buffer)
-        //{
-        //    serialPort.Write(new byte[] { buffer }, 0, 1);
-        //}
-
         //otwarcie portu
         public void open()
         {
@@ -115,30 +105,35 @@ namespace Xmodem
             flag = true;
 
             int blocks = (int)Math.Ceiling(d: (decimal)data.Length / 128);       //obliczenie ilości bloków jako sufit wielkości danych podzielnych przez 128 (rozmiar bloku)
-
-            //for (int i = 1; i < noOfBlock + 1; i++)
-            //{
-                //header = createHeader(i);                       //stworzenie nagłówka 
-                block[0] = SOH;                    //znak SOH
-                block[1] = (byte)(noOfBlock + 1);          //numer bloku
-                block[2] = (byte)(255 - (noOfBlock + 1));  //dopełnienie numeru bloku do 255
+            
+            //stworzenie nagłówka 
+            block[0] = SOH;                            //znak SOH
+            block[1] = (byte)(noOfBlock + 1);          //numer bloku
+            block[2] = (byte)(255 - (noOfBlock + 1));  //dopełnienie numeru bloku do 255
 
                 int k = 3;
                 int tmp = 0;
             Console.WriteLine(noOfBlock);
             
-            for (int j = noOfBlock * 128; j < noOfBlock * 128; j++)
+            for (int j = (noOfBlock) * 128; j < (noOfBlock+1) * 128; j++)
+            {
+                   
+                if (blocks == noOfBlock+1)      //ostatni blok
                 {
-                    block[k] = data[j];
-                    k++;
-                if (blocks == noOfBlock) tmp++;       //zliczanie bajtów w ostatnim bloku
+                    if (j >= data.Length)
+                    {
+                        for(int l = k; l < 18; l++)
+                        {
+                            block[k] = 0;   //dopełnienie zerami
+                        }
+                        break;
+                    }
+                       
                 }
-                Console.WriteLine(tmp);
+                block[k] = data[j];  
+                k++;  
+            }
 
-                if (tmp != 128 && tmp!=0) //uzupełnienie zerami jeśli blok jest mniejszy niż 128
-                {
-                    for (int j = tmp + 1; j < 128; j++) block[j] = (byte)0;
-                }
 
 
                 if (!crc)
@@ -156,7 +151,7 @@ namespace Xmodem
 
             
 
-            if ((noOfBlock - 1) * 128 >= data.Length)
+            if ((noOfBlock) * 128 >= data.Length)
             {
                 serialPort.Write(new byte[] { EOT }, 0, 1);
                 return;
