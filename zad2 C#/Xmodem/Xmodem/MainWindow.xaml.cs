@@ -21,11 +21,11 @@ namespace Xmodem
     /// </summary>
     public partial class MainWindow : Window
     {
-        private bool flagCrc = false;
+        private bool flagCrc;
 
-        PortConnection port;
         public MainWindow()
         {
+            //com.Items.Add()
             InitializeComponent();
 
         }
@@ -44,33 +44,27 @@ namespace Xmodem
         {   
             Parity p = getParity();
             StopBits s = getStopBit();
+            string name = com.Text;         
 
-           
-            port = new PortConnection(com.SelectedItem.ToString(), Convert.ToInt32(speed.Text), p, s);
-            Window1 window = new Window1(flagCrc, port);
-            window.Show();
-            this.Hide();
             
+            Window1 window = new Window1(flagCrc, name, Convert.ToInt32(speed.Text),p,s);
+            window.Show();
+            this.Close();
+
 
         }
+
         private void Button_Click_Receive(object sender, RoutedEventArgs e)
         {
             Parity p = getParity();
             StopBits s = getStopBit();
 
-
-            port = new PortConnection(com.SelectedItem.ToString(), Convert.ToInt32(speed.Text), p, s);
-            Window2 window = new Window2(flagCrc, port);
+            //port = new PortConnection(com.Text, Convert.ToInt32(speed.Text), p, s);
+            Window2 window = new Window2(flagCrc, com.Text, Convert.ToInt32(speed.Text), p, s);
             window.Show();
-            this.Hide();
+            this.Close();
                        
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         private StopBits getStopBit()
         {
             StopBits p;

@@ -15,8 +15,8 @@ namespace Xmodem
             for (int i=0;i<bytes.Length;i++)
             {
                 sum += bytes[i];
-                sum %= 256;
-            }
+            } 
+            sum %= 256;
             return (byte)sum;
 
         }

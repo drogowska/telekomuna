@@ -5,12 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Xmodem"
         mc:Ignorable="d"
-        Title="XModem" Height="450" Width="330">
+        Title="XModem" Height="450" Width="330" Background="Beige">
     <Grid>
-        <Button Content="Zmknij port" HorizontalAlignment="Left" Margin="42,365,0,0" VerticalAlignment="Top" Width="235" Height="25" Click="Button_Click_Close"/>
-        <Button Content="Obierz" HorizontalAlignment="Left" Margin="42,279,0,0" VerticalAlignment="Top" Width="235" Height="25" Click="Button_Click_Recive"/>
-        <Button Content="Odbierz plik" HorizontalAlignment="Left" Margin="42,80,0,0" VerticalAlignment="Top" Width="235" Height="25" Click="Button_Click_Choose"/>
-
+        <Button Content="Zmknij port" HorizontalAlignment="Left" Margin="42,349,0,0" VerticalAlignment="Top" Width="235" Height="25" Click="Button_Click_Close"/>
+        <Button Content="Wybierz plik" HorizontalAlignment="Left" Margin="42,19,0,0" VerticalAlignment="Top" Width="235" Height="25" Click="Button_Click_Choose"/>
+        <Button Content="Odbierz plik" HorizontalAlignment="Left" Margin="42,304,0,0" VerticalAlignment="Top" Width="235" Height="25" Click="Button_Click_Save"/>
+        <Label Content="Magdalena Stopka, Daria Rogowska" FontSize="9" Foreground="Gray" HorizontalAlignment="Left" Margin="85,387,0,0" VerticalAlignment="Top" Width="157" RenderTransformOrigin="0.678,0.455"/>
+        <TextBox HorizontalAlignment="Left" Height="221" Margin="42,63,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="235" TextChanged="TextBox_TextChanged"/>
 
     </Grid>
 </Window>

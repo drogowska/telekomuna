@@ -11,8 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.IO.Ports;
 using System.IO;
-using System.Windows;
 using Microsoft.Win32;
 
 namespace Xmodem
@@ -23,17 +23,31 @@ namespace Xmodem
     public partial class Window1 : Window
     {
         bool crc;
-        private PortConnection com;
-        public Window1(bool crc16, PortConnection port)
+        
+        private PortTransmitter tr;
+        private byte[] buf;
+        private string name;
+        private int boundRate;
+        Parity parity;
+        StopBits stopBits;
+        byte[] bytes;
+       
+        public Window1(bool crc16, string name, int bytes, Parity parity, StopBits stop)
         {
+
             this.crc = crc16;
-            this.com = port;
+            this.name = name;
+            this.boundRate = bytes;
+            this.parity = parity;
+            this.stopBits = stop;
+            
+            
             InitializeComponent();
         }
 
         private void Button_Click_Close(object sender, RoutedEventArgs e)
         {
-            com.close();
+            tr.close();
             this.Close();
 
         }
@@ -41,13 +55,31 @@ namespace Xmodem
         private void Button_Click_Choose(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            if (openFileDialog.ShowDialog() == true)
-               File.ReadAllText(openFileDialog.FileName);
 
+            if (openFileDialog.ShowDialog() == true)
+                File.ReadAllText(openFileDialog.FileName);
+
+            buf = File.ReadAllBytes(openFileDialog.FileName);// ReadAllBytes(openFileDialog.FileName);
+            tr = new PortTransmitter(name,boundRate, parity, stopBits, buf, crc);
+            //tr = new Transmitter(com);
+
+            //tr.sendFile(crc);
         }
 
         private void Button_Click_Send(object sender, RoutedEventArgs e)
         {
+            //List<byte> data = new List<byte>();
+            //for(int i=0;i<buf.Length;i++)
+            //{
+            //    data.Add(buf[i]);
+            //}
+            //tr.sendFile(data,crc);
+            tr.sendFile();
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
 
         }
     }

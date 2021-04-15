@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Xmodem"
         mc:Ignorable="d"
         Title="XModem" Height="450" Width="330">
-    <Grid RenderTransformOrigin="1,0.504" Margin="0,0,2,0">
+    <Grid RenderTransformOrigin="1,0.504" Margin="0,0,2,0" Background="Beige">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="81*"/>
             <ColumnDefinition Width="81*"/>
@@ -20,23 +20,22 @@
         </ComboBox>
 
         <ComboBox Name="stopBit" HorizontalAlignment="Left" Margin="60,164,0,0" VerticalAlignment="Top" Width="196" DataContext="COM Port" Grid.ColumnSpan="2">
-            <ComboBoxItem>None</ComboBoxItem>
             <ComboBoxItem>One</ComboBoxItem>
             <ComboBoxItem>Two</ComboBoxItem>
         </ComboBox>
-        <ComboBox Name="parity" HorizontalAlignment="Left" Margin="60,220,0,0" VerticalAlignment="Top" Width="196" DataContext="COM Port" Grid.ColumnSpan="2">
-            <ComboBoxItem>None</ComboBoxItem>
+        <ComboBox  Name="parity" HorizontalAlignment="Left" Margin="60,220,0,0" VerticalAlignment="Top" Width="196" DataContext="COM Port" Grid.ColumnSpan="2">
+            <ComboBoxItem >None</ComboBoxItem>
             <ComboBoxItem>Odd</ComboBoxItem>
             <ComboBoxItem>Even</ComboBoxItem>
         </ComboBox>
-        <Button Name="recive" Content="Odbierz" HorizontalAlignment="Left" Margin="60,319,0,0" VerticalAlignment="Top" Width="196" Click="Button_Click_Receive" Height="25" Grid.ColumnSpan="2"/>
-        
+        <Button Name="recive" Background="LightSeaGreen"  FontWeight="Bold" Content="Odbierz" HorizontalAlignment="Left" Margin="59,304,0,0" VerticalAlignment="Top" Width="196" Click="Button_Click_Receive" Height="25" Grid.ColumnSpan="2"/>
+
         <Label Content="Szybkość transmisji:" Foreground="Gray" FontSize="10"  HorizontalAlignment="Left" Margin="60,89,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="196"/>
         <Label Content="Port:" Foreground="Gray" FontSize="10"  HorizontalAlignment="Left" Margin="60,36,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="196"/>
         <Label Content="Bit Stopu:" Foreground="Gray" FontSize="10"  HorizontalAlignment="Left" Margin="60,141,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="196"/>
         <Label Content="Parzystość:" Foreground="Gray" FontSize="10"  HorizontalAlignment="Left" Margin="60,197,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="196"/>
-        <Label Content="Magdalena Stopka, Daria Rogowska" FontSize="9" Foreground="Gray" HorizontalAlignment="Left" Margin="85,397,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="157" RenderTransformOrigin="0.678,0.455"/>
-        <Button Name="send" Grid.ColumnSpan="2" Content="Wyślij" HorizontalAlignment="Left" Height="25" Margin="60,360,0,0" VerticalAlignment="Top" Width="196" Click="Button_Click_Send"/>
+        <Label Content="Magdalena Stopka, Daria Rogowska" FontSize="9" Foreground="Gray" HorizontalAlignment="Left" Margin="84,387,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="157" RenderTransformOrigin="0.678,0.455"/>
+        <Button Background="LightSeaGreen" FontWeight="Bold" Name="send" Grid.ColumnSpan="2" Content="Wyślij" HorizontalAlignment="Left" Height="25" Margin="59,345,0,0" VerticalAlignment="Top" Width="196" Click="Button_Click_Send"/>
         <TextBox Name="speed" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="25" Margin="60,112,0,0" TextWrapping="Wrap" Text="9600" VerticalAlignment="Top" Width="196"/>
     </Grid>
 </Window>
