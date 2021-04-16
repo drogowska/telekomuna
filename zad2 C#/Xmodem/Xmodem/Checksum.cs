@@ -15,8 +15,9 @@ namespace Xmodem
             for (int i=0;i<128;i++)
             {
                 sum += bytes[i];
-            } 
-            //sum %= 256;
+                //sum %= 256;
+            }
+            //
             return (byte)(sum %256);
 
         }

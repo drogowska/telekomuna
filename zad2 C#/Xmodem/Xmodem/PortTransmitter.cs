@@ -30,7 +30,7 @@ namespace Xmodem
             serialPort.StopBits = stopBits;
             serialPort.Handshake = Handshake.None;
             serialPort.WriteTimeout = 10000; //ms
-            serialPort.ReadTimeout = 100000;
+            serialPort.ReadTimeout = 10000;
             serialPort.Encoding = Encoding.UTF8;
             this.crc = crc;
 
@@ -101,9 +101,16 @@ namespace Xmodem
 
         private void sendBytes()
         {
+
+            if ((noOfBlock) * 128 >= data.Length)
+            {
+                serialPort.Write(new byte[] { EOT }, 0, 1);
+                return;
+            }
+
             //byte[] header = new byte[3];                //talica przechowująca nagłówek 
             byte[] block = new byte[crc ? 133 : 132];               //tablica przechowująca blok danych
-                                                                    //byte[] all = new byte[crc ? 133 : 132];     //tablica będąca konkatenacją tablicy header i block
+            byte[] pom = new byte[128];                                                 //byte[] all = new byte[crc ? 133 : 132];     //tablica będąca konkatenacją tablicy header i block
             flag = true;
 
             //int blocks = (int)Math.Ceiling(d: (decimal)data.Length / 128);       //obliczenie ilości bloków jako sufit wielkości danych podzielnych przez 128 (rozmiar bloku)
@@ -111,14 +118,15 @@ namespace Xmodem
 
             //stworzenie nagłówka 
             block[0] = SOH;                            //znak SOH
-            block[1] = (byte)(noOfBlock + 1);          //numer bloku
+            block[1] = (byte)(noOfBlock+1);          //numer bloku
             block[2] = (byte)(255 - (noOfBlock + 1));  //dopełnienie numeru bloku do 255
 
             int k = 3;
             int tmp = 0;
+            int s = 0;
             Console.WriteLine(noOfBlock);
             
-            for (int j = (noOfBlock) * 128; j < (noOfBlock+1) * 128 - 1; j++)
+            for (int j = ((noOfBlock) * 128); j < ((noOfBlock+1) * 128); j++)
             {
                    
                 if (blocks == (noOfBlock))      //ostatni blok
@@ -128,46 +136,31 @@ namespace Xmodem
                         for(int l = k; l < 128; l++)
                         {
                             block[k] = 0;   //dopełnienie zerami
+                            pom[s] = 0;
                         }
                         break;
                     }
-                    else
-                    {
-                        block[k] = data[j];
-                    }
                        
                 }
-                else
-                {
-                    block[k] = data[j]; //po wysłaniu wszytskiego odbiiornik wysyła nak i się indeksy wywyalają
-                }
-                 
-                k++;  
+                block[k] = data[j];
+                pom[s] = data[j];
+                k++;
+                s++;
             }
 
 
 
             if (!crc)
             {       //obliczenie algebraicznej sumy kontrolnej i wpisanie ich do bloku
-                block[131] = Checksum.algebraicSum(block);
+                block[131] = Checksum.algebraicSum(pom);
             }
             else
             {       //obliczenie crc16 i wpisanie wyników do bloku
-                byte[] checksum = BitConverter.GetBytes(Checksum.crc16(block));
+                byte[] checksum = BitConverter.GetBytes(Checksum.crc16(pom));
                 block[131] = checksum[1];
                 block[132] = checksum[0];
             }
             serialPort.Write(block, 0, block.Length);
-
-            
-
-            if ((noOfBlock+1) * 128 >= data.Length)
-            {
-                serialPort.Write(new byte[] { EOT }, 0, 1);
-                return;
-            }
-
-
         }
 
     }

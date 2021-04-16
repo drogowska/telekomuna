@@ -100,8 +100,16 @@ namespace Xmodem
             serialPort.DataReceived += new SerialDataReceivedEventHandler(dataReceived);
             //if (!serialPort.IsOpen) serialPort.Open();
 
+            //byte[] tab = new byte[128 * noOfBlocks];
+            //int k = 0;
+            //for(int i = 0; i < tab.Length; i++)
+            //{
+            //    if (i % 128 == 0) k = 0;
+            //    tab[i] = receivedBytes[k];
+            //    k++;
+            //}
 
-            return receivedBytes; 
+            return final; 
 
         }
         private void dataReceived(object sender, SerialDataReceivedEventArgs e)
@@ -126,7 +134,10 @@ namespace Xmodem
 
                     break;
                 case 0x018: //CAN
-                    serialPort.Close();
+                    //serialPort.Close();
+
+                    ReceiveBytes();
+                    //open();
                     break;
                 default:
                     break;
@@ -137,18 +148,26 @@ namespace Xmodem
         {
 
             byte[] tab = new byte[131];
-            for(int i = 3; i < 130; i++)
+            if (bytes.Length < 132) serialPort.Write(new byte[] { NAK }, 0, 1);
+            else
             {
-                receivedBytes[i - 3] = bytes[i];
+                for (int i = 3; i < 131; i++)
+                {
+                    receivedBytes[i - 3] = bytes[i];
+                }
             }
 
-            for(int j = 0; j < 130; j++)
-            {
-                tab[j] = bytes[j];
-            }
+            //for(int j = 0; j < 130; j++)
+            //{
+            //    tab[j] = bytes[j];
+            //}
             if (check(receivedBytes))
             {
                 serialPort.Write(new byte[] { ACK }, 0, 1);
+                final = new byte[128];
+                Array.Copy(receivedBytes, 0, final, noOfBlocks*128, 128);
+                Array.Resize(ref final, final.Length+128);
+                ////noOfBlocks++;
             } else
             {
                 serialPort.Write(new byte[] { NAK }, 0, 1);
@@ -158,9 +177,9 @@ namespace Xmodem
         private bool check(byte[] tab)
         {
             bool isOK = false;
-            if(crc)
+            if (crc)
             {
-                byte[] checksum = BitConverter.GetBytes(Checksum.crc16(tab));
+                byte[] checksum = BitConverter.GetBytes(Checksum.crc16(receivedBytes));
                 if(checksum[1] == bytes[131])
                 {
                     if (checksum[0] == bytes[132])
@@ -169,7 +188,7 @@ namespace Xmodem
                
             } else
             {
-                byte checksum = Checksum.algebraicSum(tab);
+                byte checksum = Checksum.algebraicSum(receivedBytes);
                 if (checksum == bytes[131]) isOK = true;                
             }
             return isOK;
