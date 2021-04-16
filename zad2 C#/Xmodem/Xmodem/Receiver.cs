@@ -39,12 +39,12 @@ namespace Xmodem
             serialPort.StopBits = stopBits;
             serialPort.Handshake = Handshake.None;
             serialPort.WriteTimeout = 10000; //ms
-            serialPort.ReadTimeout = 100000;
+            serialPort.ReadTimeout = 10000;
             serialPort.Encoding = Encoding.UTF8;
             this.crc = crc;
 
-            //data = bytes;
-            serialPort.Open();
+            //otawrcie portu
+            //serialPort.Open();
         }
 
         //otwarcie portu
@@ -62,54 +62,23 @@ namespace Xmodem
                 serialPort.Close();
         }
 
-        //private void startTransmition(bool crc)
-        //{
-        //    DateTime time = DateTime.Now;
-        //    while(true)//(DateTime.Now - time <TimeSpan.FromSeconds(60))
-        //    {
-        //        if (crc)
-        //        {
-        //            serialPort.Write(new byte[] { C },0,1);
-        //        }
-        //        else
-        //        { //suma algebraiczna
-        //            open();
-        //            serialPort.Write( new byte[] { NAK },0,1);
-        //        }
-        //        Thread.Sleep(3000);
-        //        serialPort.DataReceived += new SerialDataReceivedEventHandler(dataReceived);
-        //        Console.ReadLine();
-               
-        //    }  
-        //}
-
-      
-        public byte[] ReceiveBytes()
+     
+        public byte[] receiveBytes()
         {
-            //startTransmition(crc);
+            serialPort.DataReceived += new SerialDataReceivedEventHandler(dataReceived);
+            open();
+
             if (crc)
             {
-                open();
                 serialPort.Write(new byte[] { C }, 0, 1);
+                //serialPort.Close();
             }
             else
             { //suma algebraiczna
-                open();
                 serialPort.Write(new byte[] { NAK }, 0, 1);
             }
-            serialPort.DataReceived += new SerialDataReceivedEventHandler(dataReceived);
-            //if (!serialPort.IsOpen) serialPort.Open();
 
-            //byte[] tab = new byte[128 * noOfBlocks];
-            //int k = 0;
-            //for(int i = 0; i < tab.Length; i++)
-            //{
-            //    if (i % 128 == 0) k = 0;
-            //    tab[i] = receivedBytes[k];
-            //    k++;
-            //}
-
-            return final; 
+            return receivedBytes; 
 
         }
         private void dataReceived(object sender, SerialDataReceivedEventArgs e)
@@ -123,20 +92,17 @@ namespace Xmodem
             switch (bytes[0])
             {
                 case 0x01: //SOH
-                    noOfBlocks++;
-                    receiveFile(bytes);
+                    //noOfBlocks++;
+                    receiveFile();
                     break;
                 case 0x04: //EOT
                     serialPort.Write(new byte[] { ACK }, 0, 1);
-
                     break;
                 case 0x15: //NAK
-
                     break;
                 case 0x018: //CAN
-                    //serialPort.Close();
-
-                    ReceiveBytes();
+                    serialPort.Close();
+                    receiveBytes();
                     //open();
                     break;
                 default:
@@ -144,42 +110,40 @@ namespace Xmodem
             }
 
         }
-        public void receiveFile(byte[] bytes)
+        public void receiveFile()
         {
-
-            byte[] tab = new byte[131];
-            if (bytes.Length < 132) serialPort.Write(new byte[] { NAK }, 0, 1);
+            if (bytes.Length < 132) {
+                serialPort.Write(new byte[] { NAK }, 0, 1);         //jeżeli odebrano mniej niż minimalna długość bloku to wysyłamy znak NAK
+                return;
+            }
             else
             {
                 for (int i = 3; i < 131; i++)
                 {
-                    receivedBytes[i - 3] = bytes[i];
+                    receivedBytes[i - 3] = bytes[i];        //przepisanie odebranych danych do tablicy z pominięciem nagłówka (pierwszych 3 bajtów każdego bloku) i bajtów sumy kontrolnej
                 }
             }
 
-            //for(int j = 0; j < 130; j++)
-            //{
-            //    tab[j] = bytes[j];
-            //}
-            if (check(receivedBytes))
+            if (check(receivedBytes))       //wywołanie funkcji sprawdzającej poprawność sumy kontrolnej 
             {
-                serialPort.Write(new byte[] { ACK }, 0, 1);
+                serialPort.Write(new byte[] { ACK }, 0, 1);     //jeżeli sumy kontrolne się zgadzają to wysyłamy znak ACK
                 final = new byte[128];
-                Array.Copy(receivedBytes, 0, final, noOfBlocks*128, 128);
-                Array.Resize(ref final, final.Length+128);
+                //Array.Copy(receivedBytes, 0, final, noOfBlocks*128, 128);
+                //Array.Resize(ref final, final.Length+128);
                 ////noOfBlocks++;
             } else
             {
-                serialPort.Write(new byte[] { NAK }, 0, 1);
+                serialPort.Write(new byte[] { NAK }, 0, 1);     //jeżeli sumy kontrolne się różnią to wysyłamy znak NAK
             }  
         }     
 
+        //funkcja sprawdzająca otrzymane sumy kontrlne z wsumami obliczonymi na podstawie bloku danych podanych jako parametr
         private bool check(byte[] tab)
         {
             bool isOK = false;
             if (crc)
             {
-                byte[] checksum = BitConverter.GetBytes(Checksum.crc16(receivedBytes));
+                byte[] checksum = BitConverter.GetBytes(Checksum.crc16(tab));
                 if(checksum[1] == bytes[131])
                 {
                     if (checksum[0] == bytes[132])
@@ -188,7 +152,7 @@ namespace Xmodem
                
             } else
             {
-                byte checksum = Checksum.algebraicSum(receivedBytes);
+                byte checksum = Checksum.algebraicSum(tab);
                 if (checksum == bytes[131]) isOK = true;                
             }
             return isOK;

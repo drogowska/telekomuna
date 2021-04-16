@@ -30,8 +30,8 @@ namespace Xmodem
             serialPort.StopBits = stopBits;
             serialPort.Handshake = Handshake.None;
             serialPort.WriteTimeout = 10000; //ms
-            serialPort.ReadTimeout = 10000;
-            serialPort.Encoding = Encoding.UTF8;
+            serialPort.ReadTimeout = 10000;  //ms
+            serialPort.Encoding = Encoding.UTF8;        //ustawienie kodowania na utf8
             this.crc = crc;
 
             data = bytes;
@@ -60,23 +60,17 @@ namespace Xmodem
 
             //otwarcie portu
             open();
-            Console.ReadLine();
         }
 
         private void dataReceived(object sender, SerialDataReceivedEventArgs e)
         {
             string received = serialPort.ReadExisting();
             byte[] bytes = Encoding.Default.GetBytes(received);
-            Console.WriteLine(received);
-            Console.WriteLine(bytes[0]);
 
             switch (bytes[0])
             {
-                case 0x43: //c
-                    //crc = true;
-                    
+                case 0x43: //c                
                     sendBytes();
-                    
                     break;
                 case 0x06: //ack
                     if (flag)
@@ -102,9 +96,9 @@ namespace Xmodem
         private void sendBytes()
         {
 
-            if ((noOfBlock) * 128 >= data.Length)
+            if ((noOfBlock) * 128 >= data.Length)           //jeśli rozmiar pliku jest mniejszy lub równy ilści wysłanych bloków razy ilość bajtów w bloku to znaczy że plik został w całości przesłany
             {
-                serialPort.Write(new byte[] { EOT }, 0, 1);
+                serialPort.Write(new byte[] { EOT }, 0, 1);     //po przesłaniu całego pliku wysyłamy znak end of transmition i kończymy funkcje
                 return;
             }
 
@@ -122,9 +116,7 @@ namespace Xmodem
             block[2] = (byte)(255 - (noOfBlock + 1));  //dopełnienie numeru bloku do 255
 
             int k = 3;
-            int tmp = 0;
-            int s = 0;
-            Console.WriteLine(noOfBlock);
+            //int s = 0;
             
             for (int j = ((noOfBlock) * 128); j < ((noOfBlock+1) * 128); j++)
             {
@@ -136,16 +128,16 @@ namespace Xmodem
                         for(int l = k; l < 128; l++)
                         {
                             block[k] = 0;   //dopełnienie zerami
-                            pom[s] = 0;
+                            pom[k-3] = 0;
                         }
                         break;
                     }
                        
                 }
                 block[k] = data[j];
-                pom[s] = data[j];
+                pom[k-3] = data[j];
                 k++;
-                s++;
+                //s++;
             }
 
 

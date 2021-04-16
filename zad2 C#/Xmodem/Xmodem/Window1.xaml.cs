@@ -59,21 +59,12 @@ namespace Xmodem
             if (openFileDialog.ShowDialog() == true)
                 File.ReadAllText(openFileDialog.FileName);
 
-            buf = File.ReadAllBytes(openFileDialog.FileName);// ReadAllBytes(openFileDialog.FileName);
+            buf = File.ReadAllBytes(openFileDialog.FileName);
             tr = new PortTransmitter(name,boundRate, parity, stopBits, buf, crc);
-            //tr = new Transmitter(com);
-
-            //tr.sendFile(crc);
         }
 
         private void Button_Click_Send(object sender, RoutedEventArgs e)
         {
-            //List<byte> data = new List<byte>();
-            //for(int i=0;i<buf.Length;i++)
-            //{
-            //    data.Add(buf[i]);
-            //}
-            //tr.sendFile(data,crc);
             tr.sendFile();
         }
 

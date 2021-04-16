@@ -48,11 +48,10 @@ namespace Xmodem
             if (openFileDialog.ShowDialog() == true)
             {
                 File.ReadAllText(openFileDialog.FileName);
-                file = openFileDialog.OpenFile();
-
-                //buf = File.ReadAllBytes(openFileDialog.FileName);// ReadAllBytes(openFileDialog.FileName);
-                tr = new Receiver(name, boundRate, parity, stopBits, crc);
-            }
+               
+            } 
+            file = openFileDialog.OpenFile(); 
+            tr = new Receiver(name, boundRate, parity, stopBits, crc);
         }
 
         private void Button_Click_Close(object sender, RoutedEventArgs e)
@@ -63,10 +62,11 @@ namespace Xmodem
 
         private void Button_Click_Save(object sender, RoutedEventArgs e)
         {
-            byte[] data = tr.ReceiveBytes();
-            file.Write(data,0,data.Length);
+           
+            byte[] data = tr.receiveBytes();
+            file.Write(data, 0, data.Length);
             file.Close();
-            
+
         }
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
