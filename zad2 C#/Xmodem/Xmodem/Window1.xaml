@@ -7,11 +7,16 @@
         mc:Ignorable="d"
         Title="XModem" Height="450" Width="330" Background="Beige">
     <Grid>
-        <Button Name="Bclose" Content="Zmknij port" HorizontalAlignment="Left" Margin="42,344,0,0" VerticalAlignment="Top" Width="235" Height="25" Click="Button_Click_Close"/>
-        <Button Name="BSend" Content="Wyślij plik" HorizontalAlignment="Left" Margin="42,304,0,0" VerticalAlignment="Top" Width="235" Height="25" Click="Button_Click_Send"/>
-        <Button Name="BChoose" Content="Wybierz plik" HorizontalAlignment="Left" Margin="42,24,0,0" VerticalAlignment="Top" Width="235" Height="25" Click="Button_Click_Choose"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="283*"/>
+            <ColumnDefinition Width="40*"/>
+        </Grid.ColumnDefinitions>
+        <Button Name="Bclose"  Background="LightSeaGreen" Content="Zmknij port" HorizontalAlignment="Left" Margin="42,320,0,0" VerticalAlignment="Top" Width="235" Height="25" Click="Button_Click_Close"/>
+        <Button Name="BSend" Background="LightSeaGreen" Content="Wyślij plik" HorizontalAlignment="Left" Margin="42,280,0,0" VerticalAlignment="Top" Width="235" Height="25" Click="Button_Click_Send"/>
+        <Button Name="BChoose"  Background="LightSeaGreen" Content="Wybierz plik" HorizontalAlignment="Left" Margin="42,42,0,0" VerticalAlignment="Top" Width="235" Height="25" Click="Button_Click_Choose"/>
         <Label Content="Magdalena Stopka, Daria Rogowska" FontSize="9" Foreground="Gray" HorizontalAlignment="Left" Margin="85,387,0,0" VerticalAlignment="Top" Width="157" RenderTransformOrigin="0.678,0.455"/>
-        <TextBox HorizontalAlignment="Left" Height="221" Margin="42,66,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="235" TextChanged="TextBox_TextChanged"/>
+        <TextBox x:Name="fileName" HorizontalAlignment="Left" Height="55" Margin="132,102,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="145" TextChanged="TextBox_TextChanged"/>
+        <Label Content="Ścieżka do &#xD;&#xA;     pliku:" HorizontalAlignment="Left" Height="55" Margin="42,102,0,0" VerticalAlignment="Top" Width="90"/>
 
 
 

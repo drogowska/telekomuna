@@ -31,7 +31,7 @@ namespace Xmodem
         byte[] bytes;
         bool crc;
         Stream file;
-
+        string fileN;
         public Window2(bool crc16, string name, int bytes, Parity parity, StopBits stop)
         {
             crc = crc16;
@@ -45,13 +45,19 @@ namespace Xmodem
         private void Button_Click_Choose(object sender, RoutedEventArgs e)
         {
             SaveFileDialog openFileDialog = new SaveFileDialog();
+            long size;
             if (openFileDialog.ShowDialog() == true)
             {
                 File.ReadAllText(openFileDialog.FileName);
-               
+                size = new FileInfo(openFileDialog.FileName).Length;
+                //fileSize.Text = size.ToString();
+                this.fileN = openFileDialog.FileName;
+
             } 
             file = openFileDialog.OpenFile(); 
             tr = new Receiver(name, boundRate, parity, stopBits, crc, file);
+            fileName.Text = openFileDialog.FileName;
+            
         }
 
         private void Button_Click_Close(object sender, RoutedEventArgs e)
@@ -62,16 +68,15 @@ namespace Xmodem
 
         private void Button_Click_Save(object sender, RoutedEventArgs e)
         {
-           
-            tr.receiveBytes();
-            //file.Write(data, 0, data.Length);
-            //file.Close();
-
+            tr.receiveFile();
+            //fileSize.Text = new FileInfo(fileN).Length.ToString();
         }
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
 
         }
+
+       
     }
 }

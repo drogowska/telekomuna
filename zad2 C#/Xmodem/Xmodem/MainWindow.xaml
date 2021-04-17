@@ -11,12 +11,9 @@
             <ColumnDefinition Width="81*"/>
             <ColumnDefinition Width="81*"/>
         </Grid.ColumnDefinitions>
-        <RadioButton Name="sum"  Content="Suma kontrolna" HorizontalAlignment="Left" Margin="152,270,0,0" VerticalAlignment="Top" Checked="RadioButton_Checksum" Grid.ColumnSpan="2"/>
+        <RadioButton Name="sum" Content="Suma kontrolna" HorizontalAlignment="Left" Margin="152,270,0,0" VerticalAlignment="Top" Checked="RadioButton_Checksum" Grid.ColumnSpan="2"/>
         <RadioButton Name="crc" Content="CRC16" HorizontalAlignment="Left" Margin="60,270,0,0" VerticalAlignment="Top" Checked="RadioButton_CRC16" Width="62"/>
         <ComboBox Name="com" HorizontalAlignment="Left" Margin="60,59,0,0" VerticalAlignment="Top" Width="196" DataContext="COM Port" Grid.ColumnSpan="2" >
-            <ComboBoxItem Content="COM1"/>
-            <ComboBoxItem Content="COM2"/>
-
         </ComboBox>
 
         <ComboBox Name="stopBit" HorizontalAlignment="Left" Margin="60,164,0,0" VerticalAlignment="Top" Width="196" DataContext="COM Port" Grid.ColumnSpan="2">

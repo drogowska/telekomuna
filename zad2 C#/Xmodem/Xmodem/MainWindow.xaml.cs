@@ -25,8 +25,10 @@ namespace Xmodem
 
         public MainWindow()
         {
-            //com.Items.Add()
+           
             InitializeComponent();
+            string[] ports = SerialPort.GetPortNames();
+            for(int i=0;i<ports.Length;i++) com.Items.Add(ports[i]);
 
         }
 
@@ -45,11 +47,9 @@ namespace Xmodem
             Parity p = getParity();
             StopBits s = getStopBit();
             string name = com.Text;         
-
-            
             Window1 window = new Window1(flagCrc, name, Convert.ToInt32(speed.Text),p,s);
             window.Show();
-            this.Close();
+            this.Hide();
 
 
         }
@@ -58,8 +58,6 @@ namespace Xmodem
         {
             Parity p = getParity();
             StopBits s = getStopBit();
-
-            //port = new PortConnection(com.Text, Convert.ToInt32(speed.Text), p, s);
             Window2 window = new Window2(flagCrc, com.Text, Convert.ToInt32(speed.Text), p, s);
             window.Show();
             this.Close();
