@@ -51,7 +51,7 @@ namespace Xmodem
                
             } 
             file = openFileDialog.OpenFile(); 
-            tr = new Receiver(name, boundRate, parity, stopBits, crc);
+            tr = new Receiver(name, boundRate, parity, stopBits, crc, file);
         }
 
         private void Button_Click_Close(object sender, RoutedEventArgs e)
@@ -63,9 +63,9 @@ namespace Xmodem
         private void Button_Click_Save(object sender, RoutedEventArgs e)
         {
            
-            byte[] data = tr.receiveBytes();
-            file.Write(data, 0, data.Length);
-            file.Close();
+            tr.receiveBytes();
+            //file.Write(data, 0, data.Length);
+            //file.Close();
 
         }
 
