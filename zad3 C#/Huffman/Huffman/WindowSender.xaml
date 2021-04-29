@@ -11,9 +11,9 @@
             <ColumnDefinition Width="57*"/>
             <ColumnDefinition Width="449*"/>
         </Grid.ColumnDefinitions>
-        <Button Content="Wybierz plik" HorizontalAlignment="Left" Margin="38.248,62,0,0" VerticalAlignment="Top" Width="100" Height="40" FontSize="15" Background="#FF5B7C8C" FontWeight="Bold" Grid.Column="1"/>
-        <Button Content="Kompresuj" HorizontalAlignment="Left" Margin="252.248,62,0,0" VerticalAlignment="Top" Width="100" Height="40" FontSize="15" Background="#FF5B7C8C" FontWeight="Bold" Grid.Column="1"/>
-        <Button Content="Wyślij" HorizontalAlignment="Left" Margin="252.248,141,0,0" VerticalAlignment="Top" Width="100" Height="40" FontSize="15" Background="#FF5B7C8C" FontWeight="Bold" Grid.Column="1"/>
+        <Button Content="Wybierz plik" HorizontalAlignment="Left" Margin="38.248,62,0,0" VerticalAlignment="Top" Width="100" Height="40" FontSize="15" Background="#FF5B7C8C" FontWeight="Bold" Grid.Column="1" Click="Button_Click_Choose"/>
+        <Button Content="Kompresuj" HorizontalAlignment="Left" Margin="252.248,62,0,0" VerticalAlignment="Top" Width="100" Height="40" FontSize="15" Background="#FF5B7C8C" FontWeight="Bold" Grid.Column="1" Click="Button_Click_Compress"/>
+        <Button Content="Wyślij" HorizontalAlignment="Left" Margin="252.248,141,0,0" VerticalAlignment="Top" Width="100" Height="40" FontSize="15" Background="#FF5B7C8C" FontWeight="Bold" Grid.Column="1" Click="Button_Click_Send"/>
         <TextBox Name="fileName" HorizontalAlignment="Left" Height="40" Margin="38.248,141,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="100" Grid.Column="1"/>
         <Label Content="Śieżka:" HorizontalAlignment="Left" Margin="44,148,0,0" VerticalAlignment="Top" FontSize="14" Foreground="#FF3D3D3D" Grid.ColumnSpan="2"/>
         <TextBox HorizontalAlignment="Left" Height="23" Margin="95.248,218,0,0" TextWrapping="Wrap" Text="Daria Rogowska, Magdalena Stopka" VerticalAlignment="Top" Width="197" BorderBrush="{x:Null}" Foreground="#FF76777B" Grid.Column="1"/>

@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-E:\Daria\studia\semestr 4\Telekomunikacja i przetwarzanie sygnału\telekomuna\zad3 C#\Huffman\Huffman\obj\Debug\
+E:\Daria\studia\semestr 4\Telekomunikacja i przetwarzanie sygnału\telekomuna\zad3 C#\Huffman\Huffman\obj\Release\
 Huffman
 none
 false
-DEBUG;TRACE
+TRACE
 E:\Daria\studia\semestr 4\Telekomunikacja i przetwarzanie sygnału\telekomuna\zad3 C#\Huffman\Huffman\App.xaml
 3977973176
 
-16-12891784
+136481204
 13-1505183044
 MainWindow.xaml;WindowReceiver.xaml;WindowSender.xaml;
 
-False
+True
 

@@ -55,8 +55,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="asciiTree.cs" />
     <Compile Include="Checksum.cs" />
-    <Compile Include="Class1.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="HuffmanTree.cs" />
+    <Compile Include="HuffmanTreeBase.cs" />
+    <Compile Include="Node.cs" />
     <Compile Include="Receiver.cs" />
     <Compile Include="Transmitter.cs" />
     <Compile Include="WindowReceiver.xaml.cs">

@@ -29,7 +29,8 @@ namespace Huffman
         StopBits stopBits;
         //byte[] bytes;
         string fileN;
-
+        Stream file;
+        string text;
         public WindowSender(bool crc16, string name, int bytes, Parity parity, StopBits stop)
         {
 
@@ -60,8 +61,9 @@ namespace Huffman
                 this.fileN = openFileDialog.FileName;
             }
             fileName.Text = openFileDialog.FileName;
-
+            text = File.ReadAllText(openFileDialog.FileName);
             buf = File.ReadAllBytes(openFileDialog.FileName);
+            file = openFileDialog.OpenFile();
             tr = new Transmitter(name, boundRate, parity, stopBits, buf, crc);
         }
 
@@ -73,6 +75,15 @@ namespace Huffman
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
 
+
+        } 
+
+        private void Button_Click_Compress(object sender, RoutedEventArgs e)
+        {
+            HuffmanTree tree = new HuffmanTree();
+            tree.create(text);
+            
+            //tr.encode(text, file);
 
         }
     }

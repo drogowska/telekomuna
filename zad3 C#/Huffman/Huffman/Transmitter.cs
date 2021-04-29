@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO.Ports;
 using System.Text;
+using System.IO;
 
 namespace Huffman
 {
@@ -144,5 +146,6 @@ namespace Huffman
             serialPort.Write(block, 0, block.Length);                                       //wysłanie bloku danych z nagłówkiem i sumą kontrolną
         }
 
+        
     }
 }

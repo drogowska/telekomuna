@@ -13,7 +13,8 @@ namespace Huffman
         public Node right { get; set; }
         public Node left { get; set; }
         public Node parentNode;
-
+        //public List<bool> code;
+        public string code;
         public Node(string symbol, int freq)
         {
             this.frequency = freq;
@@ -41,6 +42,10 @@ namespace Huffman
                 symbol = n1.symbol + n2.symbol;                 //nazwa rodzica jest złączeniem nazw dzieci
             }
 
+        }
+        public int CompareTo(Node node) 
+        {
+            return this.frequency.CompareTo(node.frequency);
         }
     }
 }
