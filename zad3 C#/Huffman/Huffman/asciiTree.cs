@@ -9,7 +9,7 @@ namespace Huffman
     class asciiTree
     {
 
-        public Dictionary<char, int> initializeDictionary()
+        public static Dictionary<char, int> initializeDictionary()
         {
             Dictionary<char, int> asciiFreq = new Dictionary<char, int>();
             asciiFreq.Add('a', 7537);

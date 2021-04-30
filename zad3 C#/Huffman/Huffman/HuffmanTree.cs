@@ -33,10 +33,10 @@ namespace Huffman
                 freq[text[i]]++;                        //zwiększenie ilości występowania litery o 1
             }
             */
-
+            freq = asciiTree.initializeDictionary();
             foreach (KeyValuePair<char, int> pair in freq)
             {
-                nodes.Add(new Node(pair.Key.ToString(), pair.Value));           //stworzenie z par litera-prawdopodbieństwo węzłów i dodanie ich do listy
+                nodes.Add(new Node(pair.Key, pair.Value));           //stworzenie z par litera-prawdopodbieństwo węzłów i dodanie ich do listy
             }
 
             while (nodes.Count > 1)
@@ -50,30 +50,32 @@ namespace Huffman
                 nodes.Sort();                       //posortowanie węzłów względem częstotliwości malejąco
             }
             root = nodes.FirstOrDefault();
-            List<bool> list = new List<bool>();
-            setBitsInTree(root, "");
+            //List<bool> list = new List<bool>();
+            //setBitsInTree(root, "");
 
         }
 
 
-        public void setBitsInTree(Node node, string v)
-        {
-            if (node == null) return;
-            if (node.left == null && node.right == null)
-            {
-                node.code = v;
-                return;
-            }
-            if (node.left != null)
-            {
-                //v.Add(false);              
-                setBitsInTree(node.left, v+"0");
-            } if (node.right != null) 
-            {
-                //v.Add(true);
-                setBitsInTree(node.right, v+"1");
-            }
-        }
+        
+
+        //public void setBitsInTree(Node node, string v)
+        //{
+        //    if (node == null) return;
+        //    if (node.left == null && node.right == null)
+        //    {
+        //        node.code = v;
+        //        return;
+        //    }
+        //    if (node.left != null)
+        //    {
+        //        //v.Add(false);              
+        //        setBitsInTree(node.left, v+"0");
+        //    } if (node.right != null) 
+        //    {
+        //        //v.Add(true);
+        //        setBitsInTree(node.right, v+"1");
+        //    }
+        //}
 
         public List<bool> getBitsFromTree()
         {
@@ -81,21 +83,27 @@ namespace Huffman
 
             return result;
         }
-
-        public void encode(string text, Stream file)
+        //zakodowanie wiadomości do skomporesowanej postaci binarnej
+        public List<bool> encode(string text, Stream file)
         {
             //HuffmanTree tree = new HuffmanTree();
-            this.create(text);
+            //this.create(text);
+            //for (int i = 0; i < text.Length; i++)
+            //{
+            //    //file.Write(nodes.ElementAt(i).code);
+
+
+            //}
+            List<bool> result = new List<bool>();
             for (int i = 0; i < text.Length; i++)
             {
-                //file.Write(nodes.ElementAt(i).code);
-
-
+                List<bool> encodedCharacter = this.root.traverseTree(text[i], new List<bool>());
+                result.AddRange(encodedCharacter);
             }
-
+            return result;
         }
 
-        public void decode(Stream file, BitArray list)
+        public string decode(Stream file, BitArray list)
         {
             Node current = this.root;
             string decoded = "";
@@ -121,10 +129,8 @@ namespace Huffman
                     decoded += current.symbol;
                     current = this.root;
                 }
-
-
             }
-
+            return decoded;
         }
 
         public bool IsLeaf(Node node)

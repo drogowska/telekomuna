@@ -59,7 +59,6 @@
     <Compile Include="Checksum.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="HuffmanTree.cs" />
-    <Compile Include="HuffmanTreeBase.cs" />
     <Compile Include="Node.cs" />
     <Compile Include="Receiver.cs" />
     <Compile Include="Transmitter.cs" />
