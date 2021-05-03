@@ -150,8 +150,6 @@ namespace Huffman
                 }
             }
             //File.WriteAllText(file, decoded);
-           
-            Console.WriteLine(decoded);
             //file.Write(decode);
             return decoded;
         }

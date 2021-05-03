@@ -72,7 +72,7 @@ namespace Huffman
 
         private void Button_Click_Save(object sender, RoutedEventArgs e)
         {
-            //tr.receiveFile();
+            tr.receiveFile();
             //fileSize.Text = new FileInfo(fileN).Length.ToString();
         }
 
@@ -84,17 +84,18 @@ namespace Huffman
         private void Button_Click_Decompress(object sender, RoutedEventArgs e)
         {
             
-            SaveFileDialog openFileDialog = new SaveFileDialog();
-            Stream s;
+            //SaveFileDialog openFileDialog = new SaveFileDialog();
+            //Stream s;
             string newf;
-            //Wybranie nazwy i stworzenie pustego pliku
-            if (openFileDialog.ShowDialog() == true)
-            {
-                FileStream files = File.Create(openFileDialog.FileName);
-                //files.Close();
-            }
-            newf = openFileDialog.FileName;
-            OpenFileDialog O = new OpenFileDialog();
+            ////Wybranie nazwy i stworzenie pustego pliku
+            //if (openFileDialog.ShowDialog() == true)
+            //{
+            //    FileStream files = File.Create(openFileDialog.FileName);
+            //    files.Close();
+            //}
+            //newf = openFileDialog.FileName;
+            SaveFileDialog O = new SaveFileDialog();
+
             //wybranie pliku do dekompresii
             if (O.ShowDialog() == true)
             {
@@ -103,11 +104,11 @@ namespace Huffman
             }
             buf = File.ReadAllBytes(O.FileName);
             text = File.ReadAllText(O.FileName);
-
+            newf = O.FileName;
             //s = openFileDialog.OpenFile();
             HuffmanTree tree = new HuffmanTree();
             tree.create();
-            List<bool> bools =  buf.SelectMany(GetBitsStartingFromLSB).ToList();
+            List<bool> bools = buf.SelectMany(GetBitsStartingFromLSB).ToList();
             string t = tree.decode(newf, bools);
             File.WriteAllText(newf, t);
             //tree.decode(fileN,);
