@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Huffman
 {
-    class Node
+    class Node : IComparable<Node>
     {
         public char symbol { get; set; }
         public int frequency { get; set; }
@@ -43,7 +43,11 @@ namespace Huffman
             }
 
         }
-        public int CompareTo(Node node) 
+        public bool IsLeaf()
+        {
+            return (left == null && right == null);
+        }
+        public int CompareTo(Node node)
         {
             return this.frequency.CompareTo(node.frequency);
         }
@@ -51,8 +55,9 @@ namespace Huffman
         //Funkcja znajduje podany znak w drzewnie i wylicza dla niego postać binarną
         public List<bool> traverseTree(char symbol, List<bool> data)
         {
-            if (right == null && left == null)
+            if (this.IsLeaf())
             {
+                //return data;
                 if (symbol.Equals(this.symbol)) return data;
                 else return null;
             }

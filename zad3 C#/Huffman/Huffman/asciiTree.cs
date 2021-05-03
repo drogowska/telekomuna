@@ -106,7 +106,7 @@ namespace Huffman
             asciiFreq.Add('{', 1);
             asciiFreq.Add('}', 1);
             asciiFreq.Add('\'', 1);
-            asciiFreq.Add('}', 1);
+            //asciiFreq.Add('', 1);
             return asciiFreq;
         }
     }

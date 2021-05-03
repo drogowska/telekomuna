@@ -32,6 +32,8 @@ namespace Huffman
         bool crc;
         Stream file;
         string fileN;
+        string text;
+        byte[] buf;
         public WindowReceiver(bool crc16, string name, int bytes, Parity parity, StopBits stop)
         {
             crc = crc16;
@@ -55,6 +57,8 @@ namespace Huffman
 
             }
             file = openFileDialog.OpenFile();
+            text = File.ReadAllText(openFileDialog.FileName);
+            buf = File.ReadAllBytes(openFileDialog.FileName);
             tr = new Receiver(name, boundRate, parity, stopBits, crc, file);
             fileName.Text = openFileDialog.FileName;
 
@@ -77,6 +81,36 @@ namespace Huffman
 
         }
 
+        private void Button_Click_Decompress(object sender, RoutedEventArgs e)
+        {
+            HuffmanTree tree = new HuffmanTree();
+            tree.create(text);
+            SaveFileDialog openFileDialog = new SaveFileDialog();
+            Stream s;
+            string newf;
+            if (openFileDialog.ShowDialog() == true)
+            {
+                FileStream files = File.Create(openFileDialog.FileName);
 
+                files.Close();
+
+            }
+            newf = openFileDialog.FileName;
+            s = openFileDialog.OpenFile();
+
+            
+            List<bool> bools = buf.SelectMany(GetBitsStartingFromLSB).ToList();
+            tree.decode(newf, bools);
+            //tree.decode(fileN,);
+        }
+
+        static IEnumerable<bool> GetBitsStartingFromLSB(byte b)
+        {
+            for (int i = 0; i < 8; i++)
+            {
+                yield return (b % 2 == 0) ? false : true;
+                b = (byte)(b >> 1);
+            }
+        }
     }
 }

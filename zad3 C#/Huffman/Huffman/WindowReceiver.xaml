@@ -11,7 +11,7 @@
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Button Content="Wybierz plik" Click="Button_Click_Choose" HorizontalAlignment="Left" Margin="94,62,0,0" VerticalAlignment="Top" Width="100" Height="40" FontSize="15" Background="#FF5B7C8C" FontWeight="Bold"/>
-        <Button Content="Dekompresuj" HorizontalAlignment="Left" Margin="308,62,0,0" VerticalAlignment="Top" Width="100" Height="40" FontSize="15" Background="#FF5B7C8C" FontWeight="Bold"/>
+        <Button Content="Dekompresuj" HorizontalAlignment="Left" Margin="308,62,0,0" VerticalAlignment="Top" Width="100" Height="40" FontSize="15" Background="#FF5B7C8C" FontWeight="Bold" Click="Button_Click_Decompress"/>
         <Button Content="Odbierz" Click="Button_Click_Save" HorizontalAlignment="Left" Margin="308,141,0,0" VerticalAlignment="Top" Width="100" Height="40" FontSize="15" Background="#FF5B7C8C" FontWeight="Bold"/>
         <TextBox Name="fileName" HorizontalAlignment="Left" Height="40" Margin="94,141,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="100"/>
         <Label Content="Śieżka:" HorizontalAlignment="Left" Margin="44,148,0,0" VerticalAlignment="Top" FontSize="14" Foreground="#FF3D3D3D"/>

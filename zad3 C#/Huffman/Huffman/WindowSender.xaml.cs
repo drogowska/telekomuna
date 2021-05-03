@@ -31,6 +31,7 @@ namespace Huffman
         string fileN;
         Stream file;
         string text;
+        string newf;
         public WindowSender(bool crc16, string name, int bytes, Parity parity, StopBits stop)
         {
 
@@ -82,7 +83,26 @@ namespace Huffman
         {
             HuffmanTree tree = new HuffmanTree();
             tree.create(text);
+
+            SaveFileDialog openFileDialog = new SaveFileDialog();
+            Stream s;
+            if (openFileDialog.ShowDialog() == true)
+            {
+                FileStream files = File.Create(openFileDialog.FileName);
+                newf = openFileDialog.FileName;
+                files.Close();
+               
+            }
+             s = openFileDialog.OpenFile();
             
+            byte[] bytes = tree.encode(text, s);
+            //File.WriteAllBytes(newf, bytes);
+            //for(int i=0;i<list.Count;i++)
+            //bool[] bits = list.ToArray();
+            //byte[] bytes = new byte[bits.Length / 8 + (bits.Length % 8 == 0 ? 0 : 1)];
+            //bits.CopyTo(bytes, 0);
+            //foreach (byte b in bytes) file.WriteByte(b);
+            //File.WriteAllBytes(fileN, bytes);
             //tr.encode(text, file);
 
         }

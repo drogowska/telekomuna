@@ -1,11 +1,8 @@
-﻿using System;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
-using System.Threading.Tasks;
-using System.Collections;
-
+using System.Linq;
+using System;
 
 namespace Huffman
 {
@@ -56,8 +53,6 @@ namespace Huffman
         }
 
 
-        
-
         //public void setBitsInTree(Node node, string v)
         //{
         //    if (node == null) return;
@@ -84,59 +79,83 @@ namespace Huffman
             return result;
         }
         //zakodowanie wiadomości do skomporesowanej postaci binarnej
-        public List<bool> encode(string text, Stream file)
+        public byte[] encode(string text, Stream file)
         {
-            //HuffmanTree tree = new HuffmanTree();
-            //this.create(text);
-            //for (int i = 0; i < text.Length; i++)
-            //{
-            //    //file.Write(nodes.ElementAt(i).code);
-
-
-            //}
             List<bool> result = new List<bool>();
             for (int i = 0; i < text.Length; i++)
             {
                 List<bool> encodedCharacter = this.root.traverseTree(text[i], new List<bool>());
-                result.AddRange(encodedCharacter);
+                foreach(bool b in encodedCharacter)  result.Add(b);
+                encodedCharacter.Clear();
+                //result.AddRange(encodedCharacter);
             }
-            return result;
-        }
+            BitArray bits = new BitArray(result.ToArray());
 
-        public string decode(Stream file, BitArray list)
+            //string r = result.ToString();
+            int n = bits.Length / 8 + (bits.Length % 8 == 0 ? 0 : 1);
+            byte[] bytes = new byte[n];
+            //for(int j = 0; j < n; j++)
+            //{
+            //    byte tmp = 0;
+            //    for (int i = 0; i < 8; i ++)
+            //    {
+            //        if( j == n-1 )          //ostatni bajt danych
+            //        {
+            //            if(j%8 != 0)        //ilość bitów nie jest wielokrotnością 8
+            //            {
+                           
+            //            }
+            //        } else
+            //        {
+            //        int x = (bits[7 + (j * 8) - i] == true ? 1 : 0);
+            //        tmp += (byte) (x * Math.Pow(2, i));
+            //        }
+                    
+            //        //tmp += bits[i];
+            //    }
+            //    bytes[j] = tmp;
+            //}
+            
+            
+            //
+            //byte[] bytes = new byte[bits.Length / 8 + (bits.Length % 8 == 0 ? 0 : 1)];
+            bits.CopyTo(bytes,0);
+            //Console.WriteLine(bytes.ToString());
+            ////foreach (byte b in bytes) file.WriteByte(b);
+            //File.WriteAllBytes(file, bytes);
+            file.Write(bytes, 0, bytes.Length);
+            file.Close();
+            return bytes;
+        }
+        //odczytanie ciągu bitów i zapisanie ich jako string
+        public string decode(string file, List<bool> list)
         {
             Node current = this.root;
             string decoded = "";
             foreach (bool bit in list)
             {
-                if(bit)
+                if (bit)
                 {
-                    if (current.right != null)
-                    {
-                        current = current.right;
-                    }
+                    if (current.right != null) current = current.right;
                 }
                 else
                 {
-                    if (current.left != null)
-                    {
-                        current = current.left;
-                    }
+                    if (current.left != null) current = current.left;
                 }
 
-                if (IsLeaf(current))
+                if (current.IsLeaf())
                 {
                     decoded += current.symbol;
                     current = this.root;
                 }
             }
+            File.WriteAllText(file, decoded);
+            
+            //file.Write(decode);
             return decoded;
         }
 
-        public bool IsLeaf(Node node)
-        {
-            return (node.left == null && node.right == null);
-        }
+        
     }
 
 }
