@@ -13,12 +13,12 @@ namespace Huffman
         private Dictionary<char, int> freq = new Dictionary<char, int>();       //mapa litery i częstliowsci występowania
 
 
-        public void create(string text)
+        public void create()
         {
-            if (text.Length > 10000)
-            {
-                //this.freq = asciiTree.initializeDictionary();
-            }
+            //if (text.Length > 10000)
+            //{
+            //    //this.freq = asciiTree.initializeDictionary();
+            //}
             /*
             int n = text.Length;
             for (int i = 0; i < n; i++)
@@ -149,8 +149,9 @@ namespace Huffman
                     current = this.root;
                 }
             }
-            File.WriteAllText(file, decoded);
-            
+            //File.WriteAllText(file, decoded);
+           
+            Console.WriteLine(decoded);
             //file.Write(decode);
             return decoded;
         }

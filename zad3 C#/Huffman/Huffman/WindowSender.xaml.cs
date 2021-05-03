@@ -63,13 +63,26 @@ namespace Huffman
             }
             fileName.Text = openFileDialog.FileName;
             text = File.ReadAllText(openFileDialog.FileName);
-            buf = File.ReadAllBytes(openFileDialog.FileName);
+            //buf = File.ReadAllBytes(openFileDialog.FileName);
             file = openFileDialog.OpenFile();
-            tr = new Transmitter(name, boundRate, parity, stopBits, buf, crc);
+            //tr = new Transmitter(name, boundRate, parity, stopBits, buf, crc);
         }
 
         private void Button_Click_Send(object sender, RoutedEventArgs e)
         {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                File.ReadAllText(openFileDialog.FileName);
+                this.fileN = openFileDialog.FileName;
+            }
+            fileName.Text = openFileDialog.FileName;
+            text = File.ReadAllText(openFileDialog.FileName);
+            buf = File.ReadAllBytes(openFileDialog.FileName);
+            file = openFileDialog.OpenFile();
+            //tr = new Transmitter(name, boundRate, parity, stopBits, buf, crc);
+            tr = new Transmitter(name, boundRate, parity, stopBits, buf, crc);
             tr.sendFile();
         }
 
@@ -82,7 +95,7 @@ namespace Huffman
         private void Button_Click_Compress(object sender, RoutedEventArgs e)
         {
             HuffmanTree tree = new HuffmanTree();
-            tree.create(text);
+            tree.create();
 
             SaveFileDialog openFileDialog = new SaveFileDialog();
             Stream s;
@@ -93,7 +106,8 @@ namespace Huffman
                 files.Close();
                
             }
-             s = openFileDialog.OpenFile();
+            //buf = File.ReadAllBytes(openFileDialog.FileName);
+            s = openFileDialog.OpenFile();
             
             byte[] bytes = tree.encode(text, s);
             //File.WriteAllBytes(newf, bytes);

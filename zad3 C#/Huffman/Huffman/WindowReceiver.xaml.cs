@@ -57,8 +57,8 @@ namespace Huffman
 
             }
             file = openFileDialog.OpenFile();
-            text = File.ReadAllText(openFileDialog.FileName);
-            buf = File.ReadAllBytes(openFileDialog.FileName);
+            //text = File.ReadAllText(openFileDialog.FileName);
+            //buf = File.ReadAllBytes(openFileDialog.FileName);
             tr = new Receiver(name, boundRate, parity, stopBits, crc, file);
             fileName.Text = openFileDialog.FileName;
 
@@ -72,7 +72,7 @@ namespace Huffman
 
         private void Button_Click_Save(object sender, RoutedEventArgs e)
         {
-            tr.receiveFile();
+            //tr.receiveFile();
             //fileSize.Text = new FileInfo(fileN).Length.ToString();
         }
 
@@ -83,24 +83,33 @@ namespace Huffman
 
         private void Button_Click_Decompress(object sender, RoutedEventArgs e)
         {
-            HuffmanTree tree = new HuffmanTree();
-            tree.create(text);
+            
             SaveFileDialog openFileDialog = new SaveFileDialog();
             Stream s;
             string newf;
+            //Wybranie nazwy i stworzenie pustego pliku
             if (openFileDialog.ShowDialog() == true)
             {
                 FileStream files = File.Create(openFileDialog.FileName);
-
-                files.Close();
-
+                //files.Close();
             }
             newf = openFileDialog.FileName;
-            s = openFileDialog.OpenFile();
+            OpenFileDialog O = new OpenFileDialog();
+            //wybranie pliku do dekompresii
+            if (O.ShowDialog() == true)
+            {
+                File.ReadAllText(O.FileName);
 
-            
-            List<bool> bools = buf.SelectMany(GetBitsStartingFromLSB).ToList();
-            tree.decode(newf, bools);
+            }
+            buf = File.ReadAllBytes(O.FileName);
+            text = File.ReadAllText(O.FileName);
+
+            //s = openFileDialog.OpenFile();
+            HuffmanTree tree = new HuffmanTree();
+            tree.create();
+            List<bool> bools =  buf.SelectMany(GetBitsStartingFromLSB).ToList();
+            string t = tree.decode(newf, bools);
+            File.WriteAllText(newf, t);
             //tree.decode(fileN,);
         }
 

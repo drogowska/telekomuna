@@ -88,7 +88,7 @@ namespace Huffman
             asciiFreq.Add('?', 2);
             asciiFreq.Add(';', 2);
             asciiFreq.Add('^', 1);
-            asciiFreq.Add(' ', 1);
+            asciiFreq.Add(' ', 70000);
             asciiFreq.Add('%', 1);
             asciiFreq.Add('~', 1);
             asciiFreq.Add('=', 1);
