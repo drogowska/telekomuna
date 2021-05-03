@@ -27,7 +27,6 @@ namespace Huffman
         private int boundRate;
         Parity parity;
         StopBits stopBits;
-        //byte[] bytes;
         string fileN;
         Stream file;
         string text;
@@ -63,9 +62,7 @@ namespace Huffman
             }
             fileName.Text = openFileDialog.FileName;
             text = File.ReadAllText(openFileDialog.FileName);
-            //buf = File.ReadAllBytes(openFileDialog.FileName);
             file = openFileDialog.OpenFile();
-            //tr = new Transmitter(name, boundRate, parity, stopBits, buf, crc);
         }
 
         private void Button_Click_Send(object sender, RoutedEventArgs e)
@@ -81,7 +78,6 @@ namespace Huffman
             text = File.ReadAllText(openFileDialog.FileName);
             buf = File.ReadAllBytes(openFileDialog.FileName);
             file = openFileDialog.OpenFile();
-            //tr = new Transmitter(name, boundRate, parity, stopBits, buf, crc);
             tr = new Transmitter(name, boundRate, parity, stopBits, buf, crc);
             tr.sendFile();
         }
@@ -106,18 +102,10 @@ namespace Huffman
                 files.Close();
                
             }
-            //buf = File.ReadAllBytes(openFileDialog.FileName);
             s = openFileDialog.OpenFile();
             
             byte[] bytes = tree.encode(text, s);
-            //File.WriteAllBytes(newf, bytes);
-            //for(int i=0;i<list.Count;i++)
-            //bool[] bits = list.ToArray();
-            //byte[] bytes = new byte[bits.Length / 8 + (bits.Length % 8 == 0 ? 0 : 1)];
-            //bits.CopyTo(bytes, 0);
-            //foreach (byte b in bytes) file.WriteByte(b);
-            //File.WriteAllBytes(fileN, bytes);
-            //tr.encode(text, file);
+
 
         }
     }

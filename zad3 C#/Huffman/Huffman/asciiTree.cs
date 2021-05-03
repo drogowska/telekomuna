@@ -8,11 +8,13 @@ namespace Huffman
 {
     class asciiTree
     {
-
+        //z podanej niżej strony odczytano odpowiadające dla każdego znaku ASCI prawdopodobieństwa występowania w języku angielskim
+        //jeśli podany tekst, który ma zostać skompresowany, zawiera znaki nie znajdujące się poniżej, funkcja kompresująca skończy się nie poprawnie
+        //https://reusablesec.blogspot.com/2009/05/character-frequency-analysis-info.html?fbclid=IwAR1kdsz8gvUg6Swnp7clMEgUiFwRKUKVn2RR3h3tP1dQqXhtbgXWB5tkHl4
         public static Dictionary<char, int> initializeDictionary()
         {
-            Dictionary<char, int> asciiFreq = new Dictionary<char, int>();
-            asciiFreq.Add('a', 7537);
+            Dictionary<char, int> asciiFreq = new Dictionary<char, int>();              //dla każdej pary znak, częstość występowania, znak musi być unikalny (klucz)
+            asciiFreq.Add('a', 7537);                                                   //poniżej zostają dodane pary klucz, częstość do kolekcji Dictionary
             asciiFreq.Add('e', 7092);
             asciiFreq.Add('o', 5170);
             asciiFreq.Add('r', 4960);
@@ -106,7 +108,6 @@ namespace Huffman
             asciiFreq.Add('{', 1);
             asciiFreq.Add('}', 1);
             asciiFreq.Add('\'', 1);
-            //asciiFreq.Add('', 1);
             return asciiFreq;
         }
     }

@@ -15,22 +15,7 @@ namespace Huffman
 
         public void create()
         {
-            //if (text.Length > 10000)
-            //{
-            //    //this.freq = asciiTree.initializeDictionary();
-            //}
-            /*
-            int n = text.Length;
-            for (int i = 0; i < n; i++)
-            {
-                if (!freq.ContainsKey(text[i]))         //sprawdzenie czy w dzewie jest już taki sam klucz
-                {
-                    freq.Add(text[i], 0);               //dodanie litery do drzewa z prwdopodobieństwem równym 0
-                }
-                freq[text[i]]++;                        //zwiększenie ilości występowania litery o 1
-            }
-            */
-            freq = asciiTree.initializeDictionary();
+            freq = asciiTree.initializeDictionary();                    //inicializacja drzewa
             foreach (KeyValuePair<char, int> pair in freq)
             {
                 nodes.Add(new Node(pair.Key, pair.Value));           //stworzenie z par litera-prawdopodbieństwo węzłów i dodanie ich do listy
@@ -46,111 +31,50 @@ namespace Huffman
 
                 nodes.Sort();                       //posortowanie węzłów względem częstotliwości malejąco
             }
-            root = nodes.FirstOrDefault();
-            //List<bool> list = new List<bool>();
-            //setBitsInTree(root, "");
-
+            root = nodes.FirstOrDefault();          //ustawienie pierwszego wezła jako root
         }
 
-
-        //public void setBitsInTree(Node node, string v)
-        //{
-        //    if (node == null) return;
-        //    if (node.left == null && node.right == null)
-        //    {
-        //        node.code = v;
-        //        return;
-        //    }
-        //    if (node.left != null)
-        //    {
-        //        //v.Add(false);              
-        //        setBitsInTree(node.left, v+"0");
-        //    } if (node.right != null) 
-        //    {
-        //        //v.Add(true);
-        //        setBitsInTree(node.right, v+"1");
-        //    }
-        //}
-
-        public List<bool> getBitsFromTree()
-        {
-            List<bool> result = new List<bool>();
-
-            return result;
-        }
         //zakodowanie wiadomości do skomporesowanej postaci binarnej
         public byte[] encode(string text, Stream file)
         {
-            List<bool> result = new List<bool>();
+            List<bool> result = new List<bool>();           //stworzenie pustej listy przechowującej wynik funkcji
             for (int i = 0; i < text.Length; i++)
             {
-                List<bool> encodedCharacter = this.root.traverseTree(text[i], new List<bool>());
-                foreach(bool b in encodedCharacter)  result.Add(b);
+                List<bool> encodedCharacter = this.root.traverseTree(text[i], new List<bool>());        //obliczenie dla każdego znaku jego reprezentacji bitowej na podstawie drzewa i zapisanie do zmiennej encodedCharacter
+                foreach (bool b in encodedCharacter)  result.Add(b);                                    //dodanie elementów encodedCharacter do listy zwracanej przez funkcje
                 encodedCharacter.Clear();
-                //result.AddRange(encodedCharacter);
             }
-            BitArray bits = new BitArray(result.ToArray());
-
-            //string r = result.ToString();
-            int n = bits.Length / 8 + (bits.Length % 8 == 0 ? 0 : 1);
+            BitArray bits = new BitArray(result.ToArray());                                             //konwersja listy bool-i na BitArray
+            int n = bits.Length / 8 + (bits.Length % 8 == 0 ? 0 : 1);                                   //ustalenie rozmiaru tablicy bajtów dzieląc ilość bitów przez 8 i dodając 1 gdy dzielenie daje reszte
             byte[] bytes = new byte[n];
-            //for(int j = 0; j < n; j++)
-            //{
-            //    byte tmp = 0;
-            //    for (int i = 0; i < 8; i ++)
-            //    {
-            //        if( j == n-1 )          //ostatni bajt danych
-            //        {
-            //            if(j%8 != 0)        //ilość bitów nie jest wielokrotnością 8
-            //            {
-                           
-            //            }
-            //        } else
-            //        {
-            //        int x = (bits[7 + (j * 8) - i] == true ? 1 : 0);
-            //        tmp += (byte) (x * Math.Pow(2, i));
-            //        }
-                    
-            //        //tmp += bits[i];
-            //    }
-            //    bytes[j] = tmp;
-            //}
-            
-            
-            //
-            //byte[] bytes = new byte[bits.Length / 8 + (bits.Length % 8 == 0 ? 0 : 1)];
-            bits.CopyTo(bytes,0);
-            //Console.WriteLine(bytes.ToString());
-            ////foreach (byte b in bytes) file.WriteByte(b);
-            //File.WriteAllBytes(file, bytes);
-            file.Write(bytes, 0, bytes.Length);
-            file.Close();
+    
+            bits.CopyTo(bytes,0);                                                                       //przekopiowanie BitArray do tablicy bajtów
+            file.Write(bytes, 0, bytes.Length);                                                         //zapisanie tablicy bajtów do pliku     
+            file.Close();                                                                               //zamknięcie pliku
             return bytes;
         }
         //odczytanie ciągu bitów i zapisanie ich jako string
         public string decode(string file, List<bool> list)
         {
-            Node current = this.root;
-            string decoded = "";
-            foreach (bool bit in list)
+            Node current = this.root;                               //ustalenie wezła obecnego jako root wezeł
+            string decoded = "";                                    //inicializacja wynikowego stringa
+            foreach (bool bit in list)                              //pętla wykonuje się dla każdego bool-a z podanej jako prametr listy
             {
-                if (bit)
+                if (bit)                                            
                 {
-                    if (current.right != null) current = current.right;
+                    if (current.right != null) current = current.right;             //jeżeli bit jest true (1) to sprawdzamy czy obecny węzeł ma wezła po prawej jeśli tak to oznaczomy go jako wezeł obecny
                 }
                 else
                 {
-                    if (current.left != null) current = current.left;
-                }
+                    if (current.left != null) current = current.left;               //jeśli bit jest false (0) to sprawdzamy czy wezeł ma wezła po lewej jeśli tak to zapisujemy go do zmiennej current
+                }   
 
-                if (current.IsLeaf())
+                if (current.IsLeaf())                           //sprawdzamy czy wezeł jest liściem, czyli nie ma wezłów po lewej i prawej
                 {
-                    decoded += current.symbol;
-                    current = this.root;
+                    decoded += current.symbol;                  //do zmiennej decoded zapisujemy znak z danego wezła 
+                    current = this.root;                        //i ustalamy obecny wezeł na wezeł rodzica
                 }
             }
-            //File.WriteAllText(file, decoded);
-            //file.Write(decode);
             return decoded;
         }
 
