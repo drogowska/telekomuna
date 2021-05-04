@@ -53,9 +53,6 @@ namespace Huffman
                 this.fileN = openFileDialog.FileName;
             }
             fileName.Text = openFileDialog.FileName;
-            text = File.ReadAllText(openFileDialog.FileName);
-            buf = File.ReadAllBytes(openFileDialog.FileName);
-            file = openFileDialog.OpenFile();
             TCP tcp = new TCP();
             TCP.send(IPAddress.Parse(ipAddress.Text), Convert.ToInt32(portNumber.Text), fileName.Text);
         }

@@ -22,7 +22,6 @@ namespace Huffman
     /// </summary>
     public partial class WindowReceiver : Window
     {
-        private byte[] buf;
         string fileN;
         Stream file;
         string text;
@@ -56,11 +55,8 @@ namespace Huffman
                 this.fileN = saveFileDialog.FileName;
             }
             fileName.Text = saveFileDialog.FileName;
-            text = File.ReadAllText(saveFileDialog.FileName);
-            buf = File.ReadAllBytes(saveFileDialog.FileName);
-            file = saveFileDialog.OpenFile();
             TCP tcp = new TCP();
-            TCP.receive(IPAddress.Parse(ipAddress.Text), Convert.ToInt32(portNumber.Text), saveFileDialog.FileName);
+            TCP.receive(IPAddress.Parse(ipAddress.Text), Convert.ToInt32(portNumber.Text), fileName.Text);
         }
 
         private void Button_Click_Decompress(object sender, RoutedEventArgs e)
