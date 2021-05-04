@@ -1,0 +1,24 @@
+﻿<Window x:Class="Huffman.WindowSender"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Huffman"
+        mc:Ignorable="d"
+        Title="Nadawca" Height="265.299" Width="800">
+    <Grid Margin="10,0,-0.4,-19">
+        <Label Content="Parametry Ganiazda:" HorizontalAlignment="Left" Margin="55,35,0,0" VerticalAlignment="Top" FontSize="16"/>
+        <Label Content="Adres:" HorizontalAlignment="Left" Margin="55,88,0,0" VerticalAlignment="Top" FontSize="14"/>
+        <TextBox Name="ipAddress" HorizontalAlignment="Left" Height="25" Margin="103,92,0,0" TextWrapping="Wrap" Text="127.0.0.1" VerticalAlignment="Top" Width="106" FontSize="14"/>
+        <Label Content="Port:" HorizontalAlignment="Left" Margin="280,88,0,0" VerticalAlignment="Top" FontSize="14" RenderTransformOrigin="2.281,-0.103"/>
+        <TextBox Name="portNumber" HorizontalAlignment="Left" Height="23" Margin="323,92,0,0" TextWrapping="Wrap" Text="0" VerticalAlignment="Top" Width="120" FontSize="14"/>
+        <Label Content="Wybrany plik:" HorizontalAlignment="Left" Margin="55,147,0,0" VerticalAlignment="Top" FontSize="14"/>
+        <TextBox Name="fileName"  HorizontalAlignment="Left" Height="44" Margin="150,147,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="168" FontSize="14"/>
+        <Button Content="Wybierz plik" Click="Button_Click_Choose"  HorizontalAlignment="Left" Margin="343,151,0,0" VerticalAlignment="Top" Width="100" Background="#FF51608C" Height="27" FontWeight="Bold"/>
+        <Button Content="Kompresuj" Click="Button_Click_Compress" HorizontalAlignment="Left" Margin="533,77,0,0" VerticalAlignment="Top" Width="150" Height="40" FontSize="15" Background="#FF51608C" FontWeight="Bold"/>
+        <Button Content="Wyślij" Click="Button_Click_Send" HorizontalAlignment="Left" Margin="533,151,0,0" VerticalAlignment="Top" Width="150" Height="40" FontSize="15" Background="#FF51608C" FontWeight="Bold"/>
+        <TextBox HorizontalAlignment="Left" Height="20" Margin="280,208,0,0" TextWrapping="Wrap" Text="Daria Rogowska, Magdalna Stopka" VerticalAlignment="Top" Width="196" BorderBrush="White" Foreground="#FF403E3E"/>
+
+
+    </Grid>
+</Window>

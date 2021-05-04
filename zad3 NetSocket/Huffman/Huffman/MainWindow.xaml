@@ -1,0 +1,20 @@
+﻿<Window x:Class="Huffman.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Huffman"
+        mc:Ignorable="d"
+        Title="Algorytm kodowania Huffmana" Height="362.389" Width="800">
+    <Grid Margin="0,0,-0.4,-0.2">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="72*"/>
+            <ColumnDefinition Width="38*"/>
+            <ColumnDefinition Width="683*"/>
+        </Grid.ColumnDefinitions>
+        <Button Content="Nadawca" Click="Button_Click_Sender" HorizontalAlignment="Left" Margin="38,126,0,0" VerticalAlignment="Top" Width="200" Height="80" Grid.Column="1" FontSize="18" FontWeight="Bold" BorderBrush="#FF7AACB3" Background="#FF51608C" Grid.ColumnSpan="2"/>
+        <Button Content="Odbiorca" Click="Button_Click_Receiver" HorizontalAlignment="Left" Margin="372.704,126,0,0" VerticalAlignment="Top" Width="200" Height="80" Grid.Column="2" FontSize="18" FontWeight="Bold" BorderBrush="#FF7AACB3" Background="#FF51608C"/>
+        <TextBox Grid.Column="2" HorizontalAlignment="Left" Height="23" Margin="189.704,300,0,0" TextWrapping="Wrap" Text="Daria Rogowska, Magdalena Stopka" VerticalAlignment="Top" Width="198" Foreground="#FF403E3E" BorderBrush="White"/>
+
+    </Grid>
+</Window>
