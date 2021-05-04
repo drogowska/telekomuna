@@ -48,19 +48,19 @@ namespace Huffman
 
         private void Button_Click_Listen(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog openFileDialog = new OpenFileDialog();
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
 
-            if (openFileDialog.ShowDialog() == true)
+            if (saveFileDialog.ShowDialog() == true)
             {
-                File.ReadAllText(openFileDialog.FileName);
-                this.fileN = openFileDialog.FileName;
+                File.ReadAllText(saveFileDialog.FileName);
+                this.fileN = saveFileDialog.FileName;
             }
-            fileName.Text = openFileDialog.FileName;
-            text = File.ReadAllText(openFileDialog.FileName);
-            buf = File.ReadAllBytes(openFileDialog.FileName);
-            file = openFileDialog.OpenFile();
+            fileName.Text = saveFileDialog.FileName;
+            text = File.ReadAllText(saveFileDialog.FileName);
+            buf = File.ReadAllBytes(saveFileDialog.FileName);
+            file = saveFileDialog.OpenFile();
             TCP tcp = new TCP();
-            TCP.receive(IPAddress.Parse(ipAddress.Text), Convert.ToInt32(portNumber.Text), openFileDialog.FileName);
+            TCP.receive(IPAddress.Parse(ipAddress.Text), Convert.ToInt32(portNumber.Text), saveFileDialog.FileName);
         }
 
         private void Button_Click_Decompress(object sender, RoutedEventArgs e)
