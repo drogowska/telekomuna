@@ -19,7 +19,6 @@ namespace Huffman
 {
     public partial class WindowSender : Window
     {
-        private byte[] buf;
         string fileN;
         Stream file;
         string text;
@@ -54,7 +53,7 @@ namespace Huffman
             }
             fileName.Text = openFileDialog.FileName;
             TCP tcp = new TCP();
-            TCP.send(IPAddress.Parse(ipAddress.Text), Convert.ToInt32(portNumber.Text), fileName.Text);
+            TCP.send(IPAddress.Parse(ipAddress.Text), Convert.ToInt32(portNumber.Text), openFileDialog.FileName);
         }
 
         private void Button_Click_Compress(object sender, RoutedEventArgs e)

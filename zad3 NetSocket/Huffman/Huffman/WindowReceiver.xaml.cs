@@ -56,7 +56,7 @@ namespace Huffman
             }
             fileName.Text = saveFileDialog.FileName;
             TCP tcp = new TCP();
-            TCP.receive(IPAddress.Parse(ipAddress.Text), Convert.ToInt32(portNumber.Text), fileName.Text);
+            TCP.receive(IPAddress.Parse(ipAddress.Text), Convert.ToInt32(portNumber.Text), saveFileDialog.FileName);
         }
 
         private void Button_Click_Decompress(object sender, RoutedEventArgs e)
