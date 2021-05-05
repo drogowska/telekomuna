@@ -51,8 +51,10 @@ namespace Huffman
 
             if (saveFileDialog.ShowDialog() == true)
             {
-                File.ReadAllText(saveFileDialog.FileName);
-                this.fileN = saveFileDialog.FileName;
+                FileStream file = File.Create(saveFileDialog.FileName);
+                file.Close();
+                //File.ReadAllText(saveFileDialog.FileName);
+                //this.fileN = saveFileDialog.FileName;
             }
             fileName.Text = saveFileDialog.FileName;
             TCP tcp = new TCP();
@@ -63,21 +65,31 @@ namespace Huffman
         {
             HuffmanTree tree = new HuffmanTree();
             tree.create();
-
             SaveFileDialog openFileDialog = new SaveFileDialog();
             Stream s;
             if (openFileDialog.ShowDialog() == true)
             {
-                FileStream files = File.Create(openFileDialog.FileName);
-                newf = openFileDialog.FileName;
-                files.Close();
-
+                //FileStream files = File.Create(openFileDialog.FileName);
+                //newf = openFileDialog.FileName;
+                //files.Close();
+                File.ReadAllText(openFileDialog.FileName);
             }
-            s = openFileDialog.OpenFile();
+            newf = openFileDialog.FileName;
+            byte[]buf = File.ReadAllBytes(openFileDialog.FileName);
+            List<bool> bools = buf.SelectMany(GetBitsStartingFromLSB).ToList();
 
-            byte[] bytes = tree.encode(text, s);
+            string text = tree.decode(bools);
+            File.WriteAllText(newf,text);
 
 
+        }
+        static IEnumerable<bool> GetBitsStartingFromLSB(byte b)
+        {
+            for (int i = 0; i < 8; i++)
+            {
+                yield return (b % 2 == 0) ? false : true;
+                b = (byte)(b >> 1);
+            }
         }
     }
 }

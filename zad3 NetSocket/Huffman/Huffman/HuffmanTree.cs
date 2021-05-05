@@ -54,7 +54,7 @@ namespace Huffman
             return bytes;
         }
         //odczytanie ciągu bitów i zapisanie ich jako string
-        public string decode(string file, List<bool> list)
+        public string decode(List<bool> list)
         {
             Node current = this.root;                               //ustalenie wezła obecnego jako root wezeł
             string decoded = "";                                    //inicializacja wynikowego stringa

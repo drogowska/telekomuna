@@ -38,7 +38,7 @@ namespace Huffman
                     int i = stream.Read(bytes, 0, bytes.Length);
                     while (i != 0)
                     {
-                        fs.Write(buffer, 0, i);
+                        fs.Write(bytes, 0, i);
                         i = stream.Read(bytes, 0, bytes.Length);
                     }
                     client.Close();

@@ -17,3 +17,22 @@ C:\Users\Stopcia\Desktop\telekomuna\zad3 NetSocket\Huffman\Huffman\obj\Debug\Win
 C:\Users\Stopcia\Desktop\telekomuna\zad3 NetSocket\Huffman\Huffman\obj\Debug\WindowSender.g.cs
 C:\Users\Stopcia\Desktop\telekomuna\zad3 NetSocket\Huffman\Huffman\obj\Debug\WindowReceiver.baml
 C:\Users\Stopcia\Desktop\telekomuna\zad3 NetSocket\Huffman\Huffman\obj\Debug\WindowSender.baml
+E:\Folder\studia\semestr 4\Telekomunikacja i przetwarzanie sygnału\telekomuna\zad3 NetSocket\Huffman\Huffman\bin\Debug\Huffman.exe.config
+E:\Folder\studia\semestr 4\Telekomunikacja i przetwarzanie sygnału\telekomuna\zad3 NetSocket\Huffman\Huffman\bin\Debug\Huffman.exe
+E:\Folder\studia\semestr 4\Telekomunikacja i przetwarzanie sygnału\telekomuna\zad3 NetSocket\Huffman\Huffman\bin\Debug\Huffman.pdb
+E:\Folder\studia\semestr 4\Telekomunikacja i przetwarzanie sygnału\telekomuna\zad3 NetSocket\Huffman\Huffman\obj\Debug\Huffman.csprojAssemblyReference.cache
+E:\Folder\studia\semestr 4\Telekomunikacja i przetwarzanie sygnału\telekomuna\zad3 NetSocket\Huffman\Huffman\obj\Debug\MainWindow.g.cs
+E:\Folder\studia\semestr 4\Telekomunikacja i przetwarzanie sygnału\telekomuna\zad3 NetSocket\Huffman\Huffman\obj\Debug\WindowReceiver.g.cs
+E:\Folder\studia\semestr 4\Telekomunikacja i przetwarzanie sygnału\telekomuna\zad3 NetSocket\Huffman\Huffman\obj\Debug\WindowSender.g.cs
+E:\Folder\studia\semestr 4\Telekomunikacja i przetwarzanie sygnału\telekomuna\zad3 NetSocket\Huffman\Huffman\obj\Debug\App.g.cs
+E:\Folder\studia\semestr 4\Telekomunikacja i przetwarzanie sygnału\telekomuna\zad3 NetSocket\Huffman\Huffman\obj\Debug\Huffman_MarkupCompile.cache
+E:\Folder\studia\semestr 4\Telekomunikacja i przetwarzanie sygnału\telekomuna\zad3 NetSocket\Huffman\Huffman\obj\Debug\Huffman_MarkupCompile.lref
+E:\Folder\studia\semestr 4\Telekomunikacja i przetwarzanie sygnału\telekomuna\zad3 NetSocket\Huffman\Huffman\obj\Debug\MainWindow.baml
+E:\Folder\studia\semestr 4\Telekomunikacja i przetwarzanie sygnału\telekomuna\zad3 NetSocket\Huffman\Huffman\obj\Debug\WindowReceiver.baml
+E:\Folder\studia\semestr 4\Telekomunikacja i przetwarzanie sygnału\telekomuna\zad3 NetSocket\Huffman\Huffman\obj\Debug\WindowSender.baml
+E:\Folder\studia\semestr 4\Telekomunikacja i przetwarzanie sygnału\telekomuna\zad3 NetSocket\Huffman\Huffman\obj\Debug\Huffman.g.resources
+E:\Folder\studia\semestr 4\Telekomunikacja i przetwarzanie sygnału\telekomuna\zad3 NetSocket\Huffman\Huffman\obj\Debug\Huffman.Properties.Resources.resources
+E:\Folder\studia\semestr 4\Telekomunikacja i przetwarzanie sygnału\telekomuna\zad3 NetSocket\Huffman\Huffman\obj\Debug\Huffman.csproj.GenerateResource.cache
+E:\Folder\studia\semestr 4\Telekomunikacja i przetwarzanie sygnału\telekomuna\zad3 NetSocket\Huffman\Huffman\obj\Debug\Huffman.csproj.CoreCompileInputs.cache
+E:\Folder\studia\semestr 4\Telekomunikacja i przetwarzanie sygnału\telekomuna\zad3 NetSocket\Huffman\Huffman\obj\Debug\Huffman.exe
+E:\Folder\studia\semestr 4\Telekomunikacja i przetwarzanie sygnału\telekomuna\zad3 NetSocket\Huffman\Huffman\obj\Debug\Huffman.pdb
