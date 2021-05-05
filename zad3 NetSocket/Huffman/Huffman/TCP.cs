@@ -25,23 +25,23 @@ namespace Huffman
 
         public static void receive(IPAddress ipv4, int port,string fileName)
         {
-            TcpListener tcpListener = new TcpListener(ipv4, port);
-            tcpListener.Start();
-            byte[] buffer = new byte[1024];
-            using (FileStream fs = File.Open(fileName, FileMode.OpenOrCreate, FileAccess.Write))
+            TcpListener tcpListener = new TcpListener(ipv4, port);                                       //ustawienie TCPListener na porcie
+            tcpListener.Start();                                                                         //zacznij nasłuchiwanie na porcie
+            byte[] buffer = new byte[1024];                                                              //bufor dla odczytywanych danych
+            using (FileStream fs = File.Open(fileName, FileMode.OpenOrCreate, FileAccess.Write))         //otworzenie pliku do zapisu
             {
                 if (fs == null) return;
-                using (TcpClient client = tcpListener.AcceptTcpClient())
+                using (TcpClient client = tcpListener.AcceptTcpClient())                                 //akceptowanie oczekujących żądań połączenia
                 {
-                    NetworkStream stream = client.GetStream();
+                    NetworkStream stream = client.GetStream();                                           //uzyskanie obiekty strumienia do zapisu danych
                     byte[] bytes = new byte[1024];
                     int i = stream.Read(bytes, 0, bytes.Length);
-                    while (i != 0)
+                    while (i != 0)                                                                       //warunek spełniony, dopóki strumień nie jest pusty
                     {
-                        fs.Write(bytes, 0, i);
+                        fs.Write(bytes, 0, i);                                                           //zapis do pliku
                         i = stream.Read(bytes, 0, bytes.Length);
                     }
-                    client.Close();
+                    client.Close();                                                                      //zakończenie i zamknięcie połączenia
                 }
             }
         }
