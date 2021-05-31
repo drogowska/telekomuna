@@ -13,8 +13,8 @@ public class Main extends Application {
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("window.fxml"));
 
-        stage.setTitle("Program");
-        stage.setScene(new Scene(root, 600, 400));
+        stage.setTitle("Przetwornik A/C i C/A");
+        stage.setScene(new Scene(root, 460, 181));
         stage.show();
     }
 }
